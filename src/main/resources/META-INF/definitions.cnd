@@ -1,7 +1,14 @@
 <jnt = 'http://www.jahia.org/jahia/nt/1.0'>
 <jmix = 'http://www.jahia.org/jahia/mix/1.0'>
 
-[jnt:advancedPublish] > mix:title
- - validation (boolean) = false
- - scheduling (boolean) = false
- - date (date,datetimepicker) = now()
+[jnt:advancedPublishStart] > mix:title
+ - date (date,datetimepicker)
+
+[jnt:advancedPublishReview] > mix:title
+ - date (date,datetimepicker)
+
+[jnt:advancedPublishSchedule] > mix:title
+ - date (date,datetimepicker)
+
+[jnt:advancedPublishReschedule] > mix:title
+ - date (date,datetimepicker)

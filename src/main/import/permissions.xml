@@ -4,7 +4,8 @@
              xmlns:j="http://www.jahia.org/jahia/1.0"
              xmlns:jnt="http://www.jahia.org/jahia/nt/1.0">
     <workflow-tasks jcr:primaryType="jnt:permission">
-        <bypass-timer jcr:primaryType="jnt:permission"/>
+        <publication-reschedule jcr:primaryType="jnt:permission"/>
+        <author-publication-if-validated jcr:primaryType="jnt:permission"/>
     </workflow-tasks>
 </permissions>
 

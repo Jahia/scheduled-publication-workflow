@@ -1,6 +1,7 @@
 package org.jahia.modules.workflows.scheduled;
 
 import org.jahia.services.workflow.WorkflowService;
+import org.jahia.services.workflow.WorkflowVariable;
 import org.jahia.services.workflow.jbpm.JBPM6WorkflowProvider;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
@@ -13,10 +14,15 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(immediate=true)
-public class DelayedPublishWorkItemHandler implements WorkItemHandler {
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-    private static final Logger logger = LoggerFactory.getLogger(DelayedPublishWorkItemHandler.class);
+@Component(immediate=true)
+public class CheckDateWorkItemHandler implements WorkItemHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(CheckDateWorkItemHandler.class);
+    private static final String TASK_NAME = "Check date valid";
 
     private WorkflowService workflowService;
 
@@ -27,28 +33,40 @@ public class DelayedPublishWorkItemHandler implements WorkItemHandler {
 
     @Activate
     public void start(BundleContext bundleContext) throws Exception {
-        logger.info("Registering custom work item handler");
+        logger.info("Registering custom work item handler {}", TASK_NAME);
         JBPM6WorkflowProvider workflowProvider = (JBPM6WorkflowProvider) workflowService.getProviders().get("jBPM");
-        workflowProvider.registerWorkItemHandler("Delayed publish", this);
+        workflowProvider.registerWorkItemHandler(TASK_NAME, this);
     }
 
     @Deactivate
     public void stop(BundleContext bundleContext) throws Exception {
-        logger.info("Un-registering custom work item handler");
+        logger.info("Un-registering custom work item handler {}", TASK_NAME);
         JBPM6WorkflowProvider workflowProvider = (JBPM6WorkflowProvider) workflowService.getProviders().get("jBPM");
-        workflowProvider.unregisterWorkItemHandler("Delayed publish");
+        workflowProvider.unregisterWorkItemHandler(TASK_NAME);
     }
 
     @Override
     public void executeWorkItem(WorkItem workItem, WorkItemManager workItemManager) {
         logger.info("executeWorkItem");
-        workItemManager.completeWorkItem(workItem.getId(), null);
+        Map<String,Object> results = new HashMap<>();
+
+        final Map<String, Object> vars = workItem.getParameters();
+        WorkflowVariable dateWorkflowVariable = (WorkflowVariable) vars.get("date");
+        Date date = null;
+        if (dateWorkflowVariable != null) {
+            date = dateWorkflowVariable.getValueAsDate();
+        }
+
+        Date now = new Date();
+
+        results.put("dateIsValid", date != null && date.after(now));
+
+        workItemManager.completeWorkItem(workItem.getId(), results);
+
     }
 
     @Override
-    public void abortWorkItem(WorkItem workItem, WorkItemManager workItemManager) {
+    public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
         logger.info("abortWorkItem");
     }
-
 }
-

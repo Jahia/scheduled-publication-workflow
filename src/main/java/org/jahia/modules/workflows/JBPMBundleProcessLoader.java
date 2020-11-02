@@ -1,7 +1,10 @@
 package org.jahia.modules.workflows;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tika.io.IOUtils;
+import org.dom4j.*;
+import org.dom4j.io.SAXReader;
 import org.jahia.bin.listeners.JahiaContextLoaderListener;
 import org.jahia.osgi.BundleResource;
 import org.jahia.services.templates.TemplatePackageRegistry;
@@ -17,11 +20,10 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -40,6 +42,8 @@ public class JBPMBundleProcessLoader {
     private TemplatePackageRegistry templatePackageRegistry;
 
     private WorklowTypeRegistration defaultWorkflow;
+
+    private List<Resource> deployedWorkflowResources = new ArrayList<>();
 
     @Reference
     public void setWorkflowService(WorkflowService workflowService) {
@@ -78,11 +82,14 @@ public class JBPMBundleProcessLoader {
         Map<String,String> permissions = new HashMap<>();
         permissions.put("start", "publication-start");
         permissions.put("review", "publication-review");
-        permissions.put("bypass timer", "bypass-timer");
+        permissions.put("schedule", "publication-reschedule");
+        permissions.put("reschedule", "publication-reschedule");
         workflowTypeRegistration.setPermissions(permissions);
         Map<String,String> forms = new HashMap<>();
-        forms.put("start", "jnt:advancedPublish");
-        forms.put("review", "jnt:advancedPublish");
+        forms.put("start", "jnt:advancedPublishStart");
+        forms.put("review", "jnt:advancedPublishReview");
+        forms.put("schedule", "jnt:advancedPublishSchedule");
+        forms.put("reschedule", "jnt:advancedPublishReschedule");
         workflowTypeRegistration.setForms(forms);
         workflowTypeRegistration.setJahiaModule(templatePackageRegistry.lookupByBundle(bundleContext.getBundle()));
         workflowService.registerWorkflowType(workflowTypeRegistration);
@@ -96,6 +103,9 @@ public class JBPMBundleProcessLoader {
 
     private void deployDeclaredProcesses(BundleContext bundleContext) throws IOException {
         Enumeration<URL> processes = bundleContext.getBundle().findEntries("/", "*.bpmn2", true);
+
+        SAXReader saxReader = new SAXReader();
+
         if (processes != null && processes.hasMoreElements()) {
             logger.info("Found workflow processes to be deployed.");
 
@@ -103,8 +113,33 @@ public class JBPMBundleProcessLoader {
                 URL processURL = processes.nextElement();
                 logger.info("Found workflow process " + processURL + ". Updating...");
 
-                jbpm6WorkflowProvider.addResource(new BundleResource(processURL, bundleContext.getBundle()));
-                logger.info("... done");
+                Document document = null;
+                try {
+                    document = saxReader.read(processURL);
+                    Namespace xsiNamespace = document.getRootElement().getNamespaceForPrefix("xsi");
+                    Namespace droolsNamespace = document.getRootElement().getNamespaceForPrefix("drools");
+                    Namespace bpmn2Namespace = document.getRootElement().getNamespaceForPrefix("bpmn2");
+                    removeSchemaLocations(document, xsiNamespace);
+                    cleanAnyType(document.getRootElement(), xsiNamespace);
+                    movePropertyDefinitions(document);
+                    addDroolTaskNames(document, droolsNamespace, bpmn2Namespace);
+                    String fileName = FilenameUtils.getName(processURL.getFile());
+                    String extension = FilenameUtils.getExtension(fileName);
+
+                    File tempXmlFile = File.createTempFile(FilenameUtils.getBaseName(processURL.getFile()), "." + extension);
+                    logger.info("Saving transformed BPMN2 file to {}...", tempXmlFile);
+                    FileWriter tempXmlFileWriter = new FileWriter(tempXmlFile);
+                    document.write(tempXmlFileWriter);
+                    tempXmlFileWriter.flush();
+                    tempXmlFileWriter.close();
+
+                    Resource workflowResource = new FileSystemResource(tempXmlFile);
+                    deployedWorkflowResources.add(workflowResource);
+                    jbpm6WorkflowProvider.addResource(workflowResource);
+                    //jbpm6WorkflowProvider.addResource(new BundleResource(processURL, bundleContext.getBundle()));
+                } catch (DocumentException e) {
+                    logger.error("Error processing workflow process {}: {}", processURL, e);
+                }
             }
             logger.info("...workflow processes deployed.");
             if (jbpm6WorkflowProvider.isInitialized()) {
@@ -210,20 +245,30 @@ public class JBPMBundleProcessLoader {
             return;
         }
 
+        if (deployedWorkflowResources.size() > 0) {
+            logger.info("Found workflow processes to be undeployed.");
+            for (Resource workflowResource : deployedWorkflowResources) {
+                logger.info("Undeploy workflow process resource {}. Updating...", workflowResource);
+                jbpm6WorkflowProvider.removeResource(workflowResource);
+                if (workflowResource instanceof FileSystemResource) {
+                    ((FileSystemResource) workflowResource).getFile().delete();
+                }
+                logger.info("... done");
+            }
+            if (JahiaContextLoaderListener.isContextInitialized()) {
+                jbpm6WorkflowProvider.recompilePackages();
+            }
+            deployedWorkflowResources.clear();
+            logger.info("...workflow processes undeployed.");
+        }
+
         Enumeration<URL> processes = bundleContext.getBundle().findEntries("/", "*.bpmn2", true);
         if (processes != null && processes.hasMoreElements()) {
-            logger.info("Found workflow processes to be undeployed.");
 
             while (processes.hasMoreElements()) {
                 URL processURL = processes.nextElement();
-                logger.info("Undeploy workflow process " + processURL + ". Updating...");
 
                 jbpm6WorkflowProvider.removeResource(new BundleResource(processURL, bundleContext.getBundle()));
-                logger.info("... done");
-            }
-            logger.info("...workflow processes undeployed.");
-            if (JahiaContextLoaderListener.isContextInitialized()) {
-                jbpm6WorkflowProvider.recompilePackages();
             }
         }
         Enumeration<URL> mailTemplates = bundleContext.getBundle().findEntries("/", "*.mail", true);
@@ -238,4 +283,45 @@ public class JBPMBundleProcessLoader {
 
     }
 
+    public void removeSchemaLocations(Document document, Namespace xsiNamespace) {
+        Element rootElement = document.getRootElement();
+        Attribute xsiSchemaLocation = rootElement.attribute(new QName("schemaLocation", xsiNamespace));
+        xsiSchemaLocation.setValue("http://www.jboss.org/drools drools.xsd http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd");
+    }
+
+    public void cleanAnyType(Element element, Namespace xsiNamespace) {
+        Attribute xsiType = element.attribute(new QName("type", xsiNamespace));
+        if (xsiType != null && xsiType.getValue() != null && xsiType.getValue().equals("xs:anyType")) {
+            element.remove(xsiType);
+        }
+        for (int i = 0, size = element.nodeCount(); i < size; i++) {
+            Node node = element.node(i);
+            if (node instanceof Element) {
+                cleanAnyType((Element) node, xsiNamespace);
+            }
+        }
+    }
+
+    public void movePropertyDefinitions(Document document) {
+        List<Node> processNodes = document.selectNodes("/bpmn2:definitions/bpmn2:process");
+        for (Node processNode : processNodes) {
+            Element processElement = (Element) processNode;
+            Element extensionElements = (Element) processNode.selectSingleNode("bpmn2:extensionElements");
+            List<Node> propertiesNodes = processNode.selectNodes("bpmn2:property");
+            for (Node propertyNode : propertiesNodes) {
+                processElement.elements().add(1, (Element) propertyNode.detach());
+            }
+        }
+    }
+
+    public void addDroolTaskNames(Document document, Namespace droolsNamespace, Namespace bpmn2Namespace) {
+        QName droolsTaskNameAttr = new QName("taskName", droolsNamespace);
+        List<Node> taskNodes = document.selectNodes("//bpmn2:process/bpmn2:task");
+        for (Node taskNode : taskNodes) {
+            Element taskElement = (Element) taskNode;
+            if (taskElement.attribute(droolsTaskNameAttr) == null) {
+                taskElement.addAttribute(droolsTaskNameAttr, taskElement.attributeValue("name"));
+            }
+        }
+    }
 }
