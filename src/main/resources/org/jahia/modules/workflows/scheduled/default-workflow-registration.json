@@ -1,0 +1,19 @@
+{
+  "packageName" : "org.jahia.modules.workflows.scheduled",
+  "name" : "default-workflow",
+  "type" : "publish",
+  "canBeUsedForDefault" : true,
+  "defaultPriority" : 1,
+  "permissions" : {
+    "start": "publication-start",
+    "review": "publication-review",
+    "schedule": "publication-reschedule",
+    "reschedule": "publication-reschedule"
+  },
+  "forms" : {
+    "start": "jnt:advancedPublishStart",
+    "review": "jnt:advancedPublishReview",
+    "schedule": "jnt:advancedPublishSchedule",
+    "reschedule": "jnt:advancedPublishReschedule"
+  }
+}

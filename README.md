@@ -8,10 +8,10 @@ This module is currently in the POC (Proof of Concept) state
 ## Requirements
 
 - Jahia DXP 8.0.0.0+
+- workflow-extender module deployed on Jahia DXP server
 
 ## Todo 
 
-- Cleanup OSGi registration (maybe create a separate module for workflow registration ?)
 - Implement screen to view all content waiting to be published
 - Try to display publication date in the workflow forms
 - Fix CSS issues in workflow forms
