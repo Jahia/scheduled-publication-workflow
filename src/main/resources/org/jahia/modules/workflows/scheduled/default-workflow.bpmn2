@@ -353,7 +353,7 @@
       </bpmn2:dataInputAssociation>
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_33" name="" sourceRef="Task_13" targetRef="Task_15"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_11yu2xh" gatewayDirection="Converging">
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_11yu2xh" name="Publish now" gatewayDirection="Converging">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
@@ -413,7 +413,7 @@
       </bpmn2:dataInputAssociation>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_5">
         <bpmn2:sourceRef>DataOutput_5</bpmn2:sourceRef>
-        <bpmn2:targetRef>Property_1</bpmn2:targetRef>
+        <bpmn2:targetRef>bypassOutcome</bpmn2:targetRef>
       </bpmn2:dataOutputAssociation>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_6">
         <bpmn2:sourceRef>DataOutput_6</bpmn2:sourceRef>
@@ -629,7 +629,7 @@
     <bpmn2:property id="date" itemSubjectRef="WorfklowVariableItemDefinition" name="date"/>
     <bpmn2:property id="userHasValidationPermission" itemSubjectRef="BooleanItemDefinition" name="userHasValidationPermission"/>
     <bpmn2:property id="scheduling" itemSubjectRef="BooleanItemDefinition" name="scheduling"/>
-    <bpmn2:property id="Property_1" itemSubjectRef="StringItemDefinition" name="bypassOutcome"/>
+    <bpmn2:property id="bypassOutcome" itemSubjectRef="StringItemDefinition" name="bypassOutcome"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="default-workflow">
@@ -699,7 +699,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_11yu2xh" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="1058.0" y="265.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_13" labelStyle="BPMNLabelStyle_1"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_13" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="11.0" width="49.0" x="1058.0" y="315.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_IntermediateCatchEvent_1" bpmnElement="IntermediateCatchEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="1013.0" y="514.0"/>
