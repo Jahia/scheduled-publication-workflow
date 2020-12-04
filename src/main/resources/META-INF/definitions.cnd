@@ -5,7 +5,7 @@
  - date (date,datetimepicker)
 
 [jnt:advancedPublishReview] > mix:title
- - date (date,datetimepicker)
+ - date (date,datetimepicker) protected
 
 [jnt:advancedPublishSchedule] > mix:title
  - date (date,datetimepicker)
