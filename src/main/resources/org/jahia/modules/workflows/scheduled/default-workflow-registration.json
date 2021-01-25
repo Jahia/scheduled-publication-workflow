@@ -11,9 +11,9 @@
     "reschedule": "publication-reschedule"
   },
   "forms" : {
-    "start": "jnt:advancedPublishStart",
-    "review": "jnt:advancedPublishReview",
-    "schedule": "jnt:advancedPublishSchedule",
-    "reschedule": "jnt:advancedPublishReschedule"
+    "start": "jnt:advancedPublish",
+    "review": "jnt:advancedPublishReadonlyDate",
+    "schedule": "jnt:advancedPublish",
+    "reschedule": "jnt:advancedPublish"
   }
 }
