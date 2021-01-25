@@ -1,14 +1,10 @@
 <jnt = 'http://www.jahia.org/jahia/nt/1.0'>
 <jmix = 'http://www.jahia.org/jahia/mix/1.0'>
 
-[jnt:advancedPublishStart] > mix:title
+[jnt:advancedPublish]
+ - jcr:title (STRING) i18n
  - date (date,datetimepicker)
 
-[jnt:advancedPublishReview] > mix:title
+[jnt:advancedPublishReadonlyDate]
+ - jcr:title (STRING) i18n
  - date (date,datetimepicker) protected
-
-[jnt:advancedPublishSchedule] > mix:title
- - date (date,datetimepicker)
-
-[jnt:advancedPublishReschedule] > mix:title
- - date (date,datetimepicker)
