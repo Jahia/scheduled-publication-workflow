@@ -322,8 +322,7 @@
       <bpmn2:dataInputAssociation id="DataInputAssociation_8">
         <bpmn2:targetRef>DataInput_templateKey</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_3">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_6" language="http://www.java.com/java">alert-publish-template
-                    </bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_6" language="http://www.java.com/java">alert-publish-template</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">DataInput_8</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
