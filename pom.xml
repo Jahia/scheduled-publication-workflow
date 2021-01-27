@@ -54,20 +54,22 @@
         <groupId>org.jahia.modules</groupId>
         <version>8.0.1.0</version>
     </parent>
-    <groupId>org.test.modules</groupId>
     <artifactId>scheduled-publication-workflow</artifactId>
     <name>Scheduled Workflows</name>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>This is the custom module that contains the workflow definitions for scheduled publications</description>
 
     <scm>
-        <connection>scm:dummy:uri</connection>
-        <developerConnection>scm:dummy:uri</developerConnection>
+        <connection>scm:git:git@github.com:Jahia/scheduled-publication-workflow.git</connection>
+        <developerConnection>scm:git:git@github.com:Jahia/scheduled-publication-workflow.git</developerConnection>
+        <url>scm:git:git@github.com:Jahia/scheduled-publication-workflow.git</url>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
         <jahia-module-type>system</jahia-module-type>
+        <jahia-module-signature>MC0CFFtEYNLmqC99c3/CX0Og/OJpOCzPAhUAhc5LsGaIDdppn/IHcHHt4E5gHZk=</jahia-module-signature>
     </properties>
 
     <repositories>
