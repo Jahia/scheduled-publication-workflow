@@ -10,11 +10,25 @@
   <bpmn2:itemDefinition id="WorfklowVariableItemDefinition" isCollection="false" itemKind="Physical" structureRef="org.jahia.services.workflow.WorkflowVariable"/>
   <bpmn2:process id="default-workflow" drools:packageName="org.jahia.modules.workflows.scheduled" name="default-workflow" isExecutable="true">
     <bpmn2:extensionElements>
-      <drools:import xsi:type="xs:anyType" name="java.util.List"/>
-      <drools:import xsi:type="xs:anyType" name="java.util.Locale"/>
-      <drools:import xsi:type="xs:anyType" name="org.jahia.services.workflow.WorkflowDefinition"/>
-      <drools:import xsi:type="xs:anyType" name="org.jahia.services.workflow.WorkflowVariable"/>
+      <drools:import name="java.util.List"/>
+      <drools:import name="java.util.Locale"/>
+      <drools:import name="org.jahia.services.workflow.WorkflowDefinition"/>
+      <drools:import name="org.jahia.services.workflow.WorkflowVariable"/>
     </bpmn2:extensionElements>
+    <bpmn2:property id="publicationOutcome" itemSubjectRef="StringItemDefinition" name="publicationOutcome"/>
+    <bpmn2:property id="nodeId" itemSubjectRef="StringItemDefinition" name="nodeId"/>
+    <bpmn2:property id="nodePath" itemSubjectRef="StringItemDefinition" name="nodePath"/>
+    <bpmn2:property id="nodeIds" itemSubjectRef="ListItemDefinition" name="nodeIds"/>
+    <bpmn2:property id="workspace" itemSubjectRef="StringItemDefinition" name="workspace"/>
+    <bpmn2:property id="locale" itemSubjectRef="LocaleItemDefinition" name="locale"/>
+    <bpmn2:property id="workflow" itemSubjectRef="WorkflowDefinitionItemDefinition" name="workflow"/>
+    <bpmn2:property id="user" itemSubjectRef="StringItemDefinition" name="user"/>
+    <bpmn2:property id="currentUser" itemSubjectRef="StringItemDefinition" name="currentUser"/>
+    <bpmn2:property id="jcr_title" itemSubjectRef="WorfklowVariableItemDefinition" name="jcr_title"/>
+    <bpmn2:property id="date" itemSubjectRef="WorfklowVariableItemDefinition" name="date"/>
+    <bpmn2:property id="userHasValidationPermission" itemSubjectRef="BooleanItemDefinition" name="userHasValidationPermission"/>
+    <bpmn2:property id="scheduling" itemSubjectRef="BooleanItemDefinition" name="scheduling"/>
+    <bpmn2:property id="bypassOutcome" itemSubjectRef="StringItemDefinition" name="bypassOutcome"/>
     <bpmn2:startEvent id="StartEvent_1" name="Start">
       <bpmn2:outgoing>SequenceFlow_25</bpmn2:outgoing>
     </bpmn2:startEvent>
@@ -101,14 +115,6 @@
       <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
     </bpmn2:endEvent>
     <bpmn2:task id="Task_12" drools:taskName="Send mail" name="Send Mail">
-      <bpmn2:extensionElements>
-        <drools:onEntry-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onEntry-script>
-        <drools:onExit-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onExit-script>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_28</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_2">
@@ -158,14 +164,6 @@
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_28" name="" sourceRef="Task_12" targetRef="UserTask_1"/>
     <bpmn2:userTask id="UserTask_1" name="review">
-      <bpmn2:extensionElements>
-        <drools:onEntry-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onEntry-script>
-        <drools:onExit-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onExit-script>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_28</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:ioSpecification id="_InputOutputSpecification_3">
@@ -360,14 +358,6 @@
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_1oql671" sourceRef="ExclusiveGateway_11yu2xh" targetRef="Task_13"/>
     <bpmn2:userTask id="UserTask_2" name="reschedule">
-      <bpmn2:extensionElements>
-        <drools:onEntry-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onEntry-script>
-        <drools:onExit-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onExit-script>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_22</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_3">
@@ -494,7 +484,7 @@
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_11" sourceRef="Task_2" targetRef="ExclusiveGateway_8"/>
-    <bpmn2:task id="Task_2" name="Check date valid">
+    <bpmn2:task id="Task_2" name="Check date valid" drools:taskName="Check date valid">
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_11">
@@ -540,14 +530,6 @@
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_13" evaluatesToTypeRef="BooleanItemDefinition" language="http://www.java.com/java">return bypassOutcome.equals(&quot;publishNow&quot;);</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:task id="Task_3" drools:taskName="Send mail" name="Send Mail">
-      <bpmn2:extensionElements>
-        <drools:onEntry-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onEntry-script>
-        <drools:onExit-script xsi:type="xs:anyType" scriptFormat="http://www.java.com/java">
-                    <drools:script xsi:type="xs:anyType"/>
-                </drools:onExit-script>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_29</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_8">
@@ -557,6 +539,7 @@
         <bpmn2:dataInput id="DataInput_43" itemSubjectRef="StringItemDefinition" name="user"/>
         <bpmn2:dataInput id="DataInput_44" itemSubjectRef="StringItemDefinition" name="workspace"/>
         <bpmn2:dataInput id="DataInput_45" itemSubjectRef="ListItemDefinition" name="nodeIds"/>
+        <bpmn2:dataInput id="DataInput_46" itemSubjectRef="StringItemDefinition" name="currentUser"/>
         <bpmn2:inputSet id="InputSet_9">
           <bpmn2:dataInputRefs>DataInput_37</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_41</bpmn2:dataInputRefs>
@@ -564,6 +547,7 @@
           <bpmn2:dataInputRefs>DataInput_43</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_44</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_45</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_46</bpmn2:dataInputRefs>
         </bpmn2:inputSet>
         <bpmn2:outputSet id="OutputSet_9"/>
       </bpmn2:ioSpecification>
@@ -594,6 +578,10 @@
         <bpmn2:sourceRef>nodeIds</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_45</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_47">
+        <bpmn2:sourceRef>currentUser</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_46</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_17" sourceRef="Task_3" targetRef="UserTask_3"/>
     <bpmn2:boundaryEvent id="BoundaryEvent_1" name="" attachedToRef="UserTask_2">
@@ -607,20 +595,6 @@
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_23" sourceRef="UserTask_2" targetRef="ExclusiveGateway_7"/>
     <bpmn2:sequenceFlow id="SequenceFlow_30" sourceRef="BoundaryEvent_1" targetRef="ExclusiveGateway_11yu2xh"/>
-    <bpmn2:property id="publicationOutcome" itemSubjectRef="StringItemDefinition" name="publicationOutcome"/>
-    <bpmn2:property id="nodeId" itemSubjectRef="StringItemDefinition" name="nodeId"/>
-    <bpmn2:property id="nodePath" itemSubjectRef="StringItemDefinition" name="nodePath"/>
-    <bpmn2:property id="nodeIds" itemSubjectRef="ListItemDefinition" name="nodeIds"/>
-    <bpmn2:property id="workspace" itemSubjectRef="StringItemDefinition" name="workspace"/>
-    <bpmn2:property id="locale" itemSubjectRef="LocaleItemDefinition" name="locale"/>
-    <bpmn2:property id="workflow" itemSubjectRef="WorkflowDefinitionItemDefinition" name="workflow"/>
-    <bpmn2:property id="user" itemSubjectRef="StringItemDefinition" name="user"/>
-    <bpmn2:property id="currentUser" itemSubjectRef="StringItemDefinition" name="currentUser"/>
-    <bpmn2:property id="jcr_title" itemSubjectRef="WorfklowVariableItemDefinition" name="jcr_title"/>
-    <bpmn2:property id="date" itemSubjectRef="WorfklowVariableItemDefinition" name="date"/>
-    <bpmn2:property id="userHasValidationPermission" itemSubjectRef="BooleanItemDefinition" name="userHasValidationPermission"/>
-    <bpmn2:property id="scheduling" itemSubjectRef="BooleanItemDefinition" name="scheduling"/>
-    <bpmn2:property id="bypassOutcome" itemSubjectRef="StringItemDefinition" name="bypassOutcome"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="default-workflow">

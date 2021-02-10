@@ -1,5 +1,5 @@
 to: #if ($userNotificationEmail) $userNotificationEmail #end
-subject: Content validation by ${PrincipalViewHelper.getFullName($currentUser)} for $site.getDisplayableName()
+subject: Content has been published on $site.getDisplayableName()
 text: Hi,
 
 The publication of the following items has been accepted on ${date.format(
@@ -33,7 +33,7 @@ html:
                                 <td align="center"><img src="${servername}${contextPath}/modules/default/images/email/check.png"
                                                         width="48px" height="48px"
                                                         style="display: block; outline: none; border: none; text-decoration: none; margin-top: 32px;"><span
-                                        style="font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 20px; line-height: 80px; color: rgb(82, 92, 98); margin-top: 16px; margin-bottom: 16px;">Content has been validated</span>
+                                        style="font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 20px; line-height: 80px; color: rgb(82, 92, 98); margin-top: 16px; margin-bottom: 16px;">Content has been published</span>
                                 </td>
                             </tr>
                             <tr>
@@ -56,7 +56,7 @@ html:
                                             <td>
                                                 <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
                                                     <strong style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">${PrincipalViewHelper.getFullName($currentUser)}</strong>
-                                                    validated the following content, which can now be published on</p>
+                                                    has published the following content on</p>
                                                 <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
                                                     <strong style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">$site.getDisplayableName()
                                                         ($site.getServerName())</strong> - $locale</p>
