@@ -1,0 +1,253 @@
+to: #if ($userNotificationEmail) $userNotificationEmail #end
+subject: Veröffentlichung abgelehnt von ${PrincipalViewHelper.getFullName($currentUser)} für $site.getDisplayableName()
+text: Hi,
+
+Ein Veröffentlichungsworkflow mit einem Validierungsschritten wurde am ${date.format(
+    "short","short",$submissionDate,$locale)} zurückgewiesen von ${PrincipalViewHelper.getFullName($currentUser)} :
+#foreach( $node in $nodes )
+    #if( $velocityCount <= 10)
+    - ${node.getDisplayableName()}
+    #end
+#end
+
+html:
+<head>
+    <meta charset="UTF-8">
+    <title>Webpack App</title>
+</head>
+
+<body>
+<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" align="left" valign="top"
+       style="padding: 32px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; background-color: rgb(246, 250, 252); border: none;">
+    <tbody>
+    <tr>
+        <td valign="top">
+            <table width="600px" align="center" cellpadding="0" cellspacing="0" border="0" valign="top">
+                <tbody>
+                <tr>
+                    <td>
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" align="left" valign="top"
+                               style="padding: 32px; background-color: rgb(255, 255, 255); margin-top: 16px; border: 1px solid rgb(243, 246, 248);">
+                            <tbody>
+                            <tr>
+                                <td align="center"><img src="${servername}${contextPath}/modules/default/images/email/warning.png"
+                                                        width="48px" height="48px"
+                                                        style="display: block; outline: none; border: none; text-decoration: none; margin-top: 32px;"><span
+                                        style="font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 20px; line-height: 80px; color: rgb(82, 92, 98); margin-top: 16px; margin-bottom: 16px;">Ihre angeforderte Veröffentlichung wurde abgelehnt</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table cellspacing="0" cellpadding="0" border="0" width="100%" style="width: 100%; margin: 32px 0px;">
+                                        <tr>
+                                            <td align="left" valign="top" width="600px" height="1"
+                                                style="background-color: rgb(240, 240, 240); border-collapse: collapse; line-height: 1;"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                            <tr>
+                                <td>
+                                    <table width="350px" cellpadding="0" cellspacing="0" border="0" align="left" valign="top">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
+                                                    <strong style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">${PrincipalViewHelper.getFullName($currentUser)}</strong>
+                                                    hat Ihre angeforderte Veröffentlichung abgelehnt</p>
+                                                <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
+                                                    <strong style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">$site.getDisplayableName()
+                                                        ($site.getServerName())</strong> - $locale</p>
+                                                <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
+                                                    ${date.format(
+                                                        "short","short",$submissionDate,$locale)}</p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table width="160px" align="right" cellpadding="0" cellspacing="0" border="0" valign="top"
+                                           style="margin-top: 24px; border-collapse: collapse; border-radius: 4px; overflow: hidden;">
+                                        <tbody>
+                                        <tr style="background-color: rgb(0, 124, 176); padding: 24px; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-weight: 600; line-height: 48px; color: rgb(255, 255, 255); text-align: center; border: 0px; border-radius: 4px;">
+                                            <td><span style="margin-right: 8px;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"
+                                                                                      xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M9.29167 0.166672H1.70833C1.10708 0.166672 0.625 0.654172 0.625 1.25001V7.75C0.625 8.34584 1.10708 8.83334 1.70833 8.83334H3.875V7.75H1.70833V2.33334H9.29167V7.75H7.125V8.83334H9.29167C9.8875 8.83334 10.375 8.34584 10.375 7.75V1.25001C10.375 0.654172 9.89292 0.166672 9.29167 0.166672V0.166672ZM5.5 3.41667L3.33333 5.58334H4.95833V8.83334H6.04167V5.58334H7.66667L5.5 3.41667V3.41667Z"
+                                                                                  fill="white"></path>
+                                                                        </svg></span><a
+                                                    href="${editPrefix}/sites/$site.getSiteKey()/${site.getHome().getName()}.html"
+                                                    style="color: rgb(255, 255, 255); text-decoration: none;">Öffne Jahia</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table cellspacing="0" cellpadding="0" border="0" width="100%" style="width: 100%; margin: 32px 0px;">
+                                        <tr>
+                                            <td align="left" valign="top" width="600px" height="1"
+                                                style="background-color: rgb(240, 240, 240); border-collapse: collapse; line-height: 1;"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: 'Nunito Sans', Helvetica, Arial, sans-serif;">
+                                        <strong style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: 'Nunito Sans', Helvetica, Arial, sans-serif;">
+                                            $workflowTitle
+                                        </strong>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
+                                        $publicationCount Element(e) ist/sind betroffen</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" align="left" valign="top"
+                                           style="border-bottom: 1px solid rgb(224, 224, 224); margin-bottom: 16px;">
+                                        <tbody>
+                                            #set($cpt = 0)
+                                            #foreach ($entry in $publications.entrySet())
+                                                #if ($entry.value.size() > 0)
+                                                    #foreach ($nodeInfo in $entry.value)
+                                                        #set($cpt = $cpt + 1)
+                                                        #if($cpt < 5)
+                                                            #if($cpt%2 == 0)
+                                                                #define ( $bgColor ) rgb(246, 250, 252) #end
+                                                            #else
+                                                                #define ( $bgColor ) rgb(255, 255, 255) #end
+                                                            #end
+                                                        <tr>
+                                                            <td style="line-height: 48px; border-top: 1px solid rgb(224, 224, 224); width: 100%; padding: 8px; background-color: rgb(246, 250, 252);">
+                                                                <table width="70%" cellpadding="0" cellspacing="0" border="0" align="left"
+                                                                       valign="top"
+                                                                       style="table-layout: fixed;">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td style="line-height: 24px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                                            <a href="${editPrefix}${nodeInfo.get(
+                                                                                "displayablePath")}.html"
+                                                                               style="color: rgb(255, 255, 255); text-decoration: none;"><strong
+                                                                                    style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">${nodeInfo.get(
+                                                                                "displayableName")}</strong></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="line-height: 24px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                                            <span style="font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 12px; line-height: 14px; color: rgb(130, 136, 146);">${nodeInfo.get(
+                                                                                "type")}</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <table width="30%" align="right" cellpadding="0" cellspacing="0" border="0"
+                                                                       valign="top"
+                                                                       style="table-layout: fixed;">
+                                                                    #if( $nodeInfo.get("status") == 12 )
+                                                                        #define( $operation ) Löschen #end
+                                                                        #define ( $color ) rgb(224, 24, 45) #end
+                                                                    #end
+                                                                    #if( $nodeInfo.get("status") == 3 )
+                                                                        #define( $operation ) Ändern #end
+                                                                        #define ( $color ) rgb(235, 187, 18) #end
+                                                                    #end
+                                                                    #if( $nodeInfo.get("status") == 4 )
+                                                                        #define( $operation ) Neu #end
+                                                                        #define ( $color ) rgb(14, 169, 130) #end
+                                                                    #end
+                                                                    #if( $nodeInfo.get("status") == 5 )
+                                                                        #define( $operation ) Zuvor unveröffentlicht #end
+                                                                        #define ( $color ) rgb(82, 92, 98) #end
+                                                                    #end
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td style="line-height: 24px; text-align: right;"><span
+                                                                                style="font-family: sans-serif; font-size: 14px;
+                                                                                line-height: 14px; color: $color;">$operation</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="line-height: 24px; text-align: right; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                                            <span style="font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 12px; line-height: 14px; color: rgb(130, 136, 146);">${PrincipalViewHelper.getFullName($currentUser)}</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        #end
+                                                    #end
+                                                #end
+                                            #end
+                                        </tbody>
+                                    </table>
+                                    #if( $publicationCount > 4)
+                                        #set($rest = $publicationCount - 4)
+                                        #if ($rest > 0)
+                                            <table width="100%" cellpadding="0" cellspacing="0" border="0" align="left" valign="top">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="center">
+                                                        <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
+                                                            Und ${rest} weitere(s) ...</p>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        #end
+                                    #end
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        #if ($comments)
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" align="left" valign="top"
+                                   style="padding: 32px; background-color: rgb(255, 255, 255); margin-top: 16px; border: 1px solid rgb(243, 246, 248);">
+                                <tbody>
+                                <tr>
+                                    <td><span
+                                            style="font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: normal; line-height: 32px; color: rgb(55, 60, 66); text-align: center; margin-bottom: 8px; margin-top: 8px;">Kommentar</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        #foreach ($comment in $comments)
+                                            <table width="100%" cellpadding="0" cellspacing="0" border="0" align="left" valign="top"
+                                                   style="border-left: 1px solid rgb(243, 246, 248); padding-left: 16px; margin-top: 16px;">
+                                                <tbody>
+                                                <tr>
+                                                    <td><strong
+                                                            style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">$comment.get(
+                                                        "userName") on ${date.format(
+                                                        "default", "default", $comment.get("time"), $locale)}</strong>
+                                                        <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
+                                                            "$comment.get("comment")”</p>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        #end
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        #end
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
