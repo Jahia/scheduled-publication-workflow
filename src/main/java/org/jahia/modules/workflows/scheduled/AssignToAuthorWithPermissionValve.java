@@ -20,11 +20,13 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.jcr.RepositoryException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component(immediate=true)
 public class AssignToAuthorWithPermissionValve extends BaseAuthValve {
 
-    public static final String TASK_NAME = "schedule";
+    public static final List<String> TASK_NAMES = Arrays.asList("schedule", "reschedule");
     public static final String PERMISSION = "author-publication-if-validated";
 
     private Pipeline pipeline;
@@ -68,7 +70,7 @@ public class AssignToAuthorWithPermissionValve extends BaseAuthValve {
 
         String taskName = task.getNames().get(0).getText();
 
-        if (taskName.equals(TASK_NAME)) {
+        if (TASK_NAMES.contains(taskName)) {
             KieSession kieSession = peopleAssignmentContext.getKieSession();
 
             WorkItem workItem = peopleAssignmentContext.getWorkItem();
