@@ -95,26 +95,6 @@ jobs:
             - << pipeline.parameters.TESTS_PATH >>node_modules
       - *persist-workspace
 
-  # Lint the project or any other static code analysis
-  # This action should run in parrallel, failed linting should trigger an error but should not stop execution of the tests
-  # Ideally this should lint both the module codebase and the test codebase, we want to fail on warning (it is up the the
-  # team to either fix the warning, ignore the warning, or modify the ruleset so that this warnning doesn't happen again)
-  lint:
-    <<: *workdir
-    docker:
-      - image: cimg/node:14.15
-    steps:
-      - *attach-workspace
-      - run:
-          name: Yarn lint tests
-          command: |
-            cd << pipeline.parameters.TESTS_PATH >>
-            yarn run lint --max-warnings 1
-      - run:
-          name: Yarn lint module
-          command: |
-            yarn run lint --max-warnings 1
-
   # Run security checks
   # Security checks on the project are used to validate that we don't use any problematic javascript libraries
   # It is using audit-ci by IBM (https://github.com/IBM/audit-ci)
@@ -682,9 +662,6 @@ workflows:
                     circleci-agent step halt
                   fi
           context: QA_ENVIRONMENT
-          requires:
-            - initialize
-      - lint:
           requires:
             - initialize
       - security:
