@@ -30,3 +30,5 @@ jobs:
   - type: module
     id: sandbox
     filepath: /tmp/scheduled-publication-workflow-LATEST.jar
+  - type: groovy
+    filepath: ./assets/setMailServer.groovy

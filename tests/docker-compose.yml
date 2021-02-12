@@ -3,18 +3,21 @@ services:
   jahia:
     image: "${JAHIA_IMAGE}"
     container_name: jahia
+    depends_on:
+      - mailhog
     ports:
       - "${JAHIA_PORT}:8080"
     extra_hosts:
       - jahia:127.0.0.1
     networks:
-      - stack      
+      - stack
   # Cypress container
   cypress:
     image: "${TESTS_IMAGE}"
     container_name: e2e-tests
     depends_on:
       - jahia
+      - mailhog
     environment:
       - MANIFEST=${MANIFEST}
       - JAHIA_USERNAME=${JAHIA_USERNAME}
@@ -24,11 +27,18 @@ services:
       - JAHIA_PORT=${JAHIA_PORT}
       - NEXUS_USERNAME=${NEXUS_USERNAME}
       - NEXUS_PASSWORD=${NEXUS_PASSWORD}
-    volumes: 
+    volumes:
       - type: bind
         source: ./results
         target: /tmp/results
     networks:
       - stack
+  mailhog:
+      image: mailhog/mailhog
+      container_name: mailhog.test
+      ports:
+        - 8025:8025
+      networks:
+        - stack
 networks:
   stack:
