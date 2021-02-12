@@ -7,7 +7,7 @@
   "permissions" : {
     "start": "publication-start",
     "review": "publication-review",
-    "review.publishnow": "publish",
+    "review.publishNow": "publish",
     "schedule": "publication-reschedule",
     "reschedule": "publication-reschedule"
   },
