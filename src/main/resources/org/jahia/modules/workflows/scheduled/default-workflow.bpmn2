@@ -262,6 +262,7 @@
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_29</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_29" name="accept" sourceRef="ExclusiveGateway_1" targetRef="Task_3">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_18" evaluatesToTypeRef="BooleanItemDefinition" language="http://www.java.com/java">return publicationOutcome.equals(&quot;accept&quot;);</bpmn2:conditionExpression>
@@ -419,6 +420,7 @@
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_30</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_1oql671</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_1oql671" sourceRef="ExclusiveGateway_11yu2xh" targetRef="Task_13"/>
@@ -894,6 +896,9 @@
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9" language="http://www.java.com/java">return bypassOutcome.equals(&quot;schedulePublication&quot;);</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_21" drools:priority="1" sourceRef="ExclusiveGateway_6" targetRef="Task_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="publishNow" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_11yu2xh">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_22" evaluatesToTypeRef="BooleanItemDefinition" language="http://www.java.com/java">return publicationOutcome.equals(&quot;publishNow&quot;);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="default-workflow">
@@ -1029,25 +1034,25 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_10" bpmnElement="Task_4">
         <dc:Bounds height="50.0" width="110.0" x="914.0" y="660.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_31">
+        <bpmndi:BPMNLabel id="BPMNLabel_31" labelStyle="BPMNLabelStyle_1">
           <dc:Bounds height="11.0" width="41.0" x="948.0" y="679.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_11" bpmnElement="Task_5">
         <dc:Bounds height="50.0" width="110.0" x="939.0" y="167.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_60">
+        <bpmndi:BPMNLabel id="BPMNLabel_60" labelStyle="BPMNLabelStyle_1">
           <dc:Bounds height="11.0" width="41.0" x="973.0" y="186.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_12" bpmnElement="Task_6">
         <dc:Bounds height="50.0" width="110.0" x="1099.0" y="167.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_61">
+        <bpmndi:BPMNLabel id="BPMNLabel_61" labelStyle="BPMNLabelStyle_1">
           <dc:Bounds height="11.0" width="52.0" x="1128.0" y="186.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_7" bpmnElement="ExclusiveGateway_6" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="460.0" y="393.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_14">
+        <bpmndi:BPMNLabel id="BPMNLabel_14" labelStyle="BPMNLabelStyle_1">
           <dc:Bounds height="11.0" width="76.0" x="447.0" y="443.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -1271,6 +1276,14 @@
         <di:waypoint xsi:type="dc:Point" x="485.0" y="512.0"/>
         <di:waypoint xsi:type="dc:Point" x="630.0" y="512.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_43"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="787.0" y="150.0"/>
+        <di:waypoint xsi:type="dc:Point" x="787.0" y="333.0"/>
+        <di:waypoint xsi:type="dc:Point" x="865.0" y="333.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_53">
+          <dc:Bounds height="11.0" width="47.0" x="764.0" y="282.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
