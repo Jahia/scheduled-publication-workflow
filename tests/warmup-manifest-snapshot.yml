@@ -32,3 +32,5 @@ jobs:
     filepath: /tmp/scheduled-publication-workflow-LATEST.jar
   - type: groovy
     filepath: ./assets/setMailServer.groovy
+  - type: groovy
+    filepath: ./assets/setScheduledWorkflowRule.groovy
