@@ -34,7 +34,6 @@ sed -i -e "s/NEXUS_USERNAME/${NEXUS_USERNAME}/g" /tmp/run-artifacts/${MANIFEST}
 sed -i -e "s/NEXUS_PASSWORD/${passwd}/g" /tmp/run-artifacts/${MANIFEST}
 
 echo " == Warming up the environment =="
-cat /tmp/run-artifacts/${MANIFEST}
 ./node_modules/jahia-cli/bin/run manifest:run --manifest=/tmp/run-artifacts/${MANIFEST} --jahiaAdminUrl=${JAHIA_URL} --nosandbox
 
 echo " == Environment warmup complete =="
