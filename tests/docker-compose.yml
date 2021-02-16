@@ -15,6 +15,7 @@ services:
   cypress:
     image: "${TESTS_IMAGE}"
     container_name: e2e-tests
+    ipc: host
     depends_on:
       - jahia
       - mailhog

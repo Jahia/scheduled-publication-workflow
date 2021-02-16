@@ -1,4 +1,4 @@
-FROM cypress/base:14
+FROM cypress/base:14.15.4
 
 ADD . /tmp
 WORKDIR /tmp
@@ -13,8 +13,5 @@ RUN mkdir /tmp/results
 #CI=true reduces the verbosity of the installation logs
 RUN CI=true yarn install
 RUN CI=true /tmp/node_modules/.bin/cypress install
-
-# Jahia-cli is used to warmup the environment at startup
-RUN PUPPETEER_SKIP_DOWNLOAD=true yarn add jahia-cli
 
 CMD ["/bin/bash", "-c", "/tmp/env.run.sh"]
