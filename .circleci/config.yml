@@ -252,7 +252,7 @@ jobs:
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_LOGIN" --password-stdin
       - run:
           name: Spin-up dockerized jahia
-          # At that point we're only sprinning up Jahia and its runtime dependencies,
+          # At that point we're only spinning up Jahia and its runtime dependencies,
           # We are not starting the tests yet since we first want to build the test container (or run from a previously built container) \
           # Checking the presence of the .env file is there because it's needed by the tests, but to not break ci/cd if variables
           #   are added to the compose file but not to the environment variables in circleci config.yml
@@ -262,7 +262,7 @@ jobs:
             if [[ ! -e .env ]]; then
               mv .env.example .env
             fi
-            docker-compose -f docker-compose.yml up -d jahia
+            docker-compose -f docker-compose.yml up -d jahia mailhog
           no_output_timeout: 2h
           environment:
             MANIFEST: << parameters.MANIFEST >>
