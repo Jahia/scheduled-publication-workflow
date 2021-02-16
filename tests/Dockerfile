@@ -1,11 +1,11 @@
-FROM cypress/base:13.8.0
+FROM cypress/base:14
 
 ADD . /tmp
 WORKDIR /tmp
 
 RUN groupadd -r jahians && useradd --no-log-init -r -m -g jahians jahians
 RUN chown -R jahians:jahians /tmp
-USER jahians
+USER jahians:jahians
 
 RUN mkdir /tmp/run-artifacts
 RUN mkdir /tmp/results

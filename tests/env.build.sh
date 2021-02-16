@@ -9,6 +9,24 @@ if [ ! -d ./artifacts ]; then
   mkdir -p ./artifacts
 fi
 
+rm -rf ./artifacts/*
+
+if [ -d ./results/reports ]; then
+  rm -rf ./results/reports
+fi
+
+if [ -d ./results/screenshots ]; then
+  rm -rf ./results/screenshots
+fi
+
+if [ -d ./results/videos ]; then
+  rm -rf ./results/videos
+fi
+
+if [ -d ./node_modules ]; then
+  rm -rf ./node_modules
+fi
+
 if [[ -e ../target ]]; then
     cp -R ../target/* ./artifacts/
     cp ./artifacts/*SNAPSHOT.jar ./artifacts/scheduled-publication-workflow-SNAPSHOT.jar
