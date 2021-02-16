@@ -1,7 +1,7 @@
 {
   "reporterEnabled": "reporter/json.js, mocha-junit-reporter",
   "mochaJunitReporterReporterOptions": {
-    "mochaFile": "results/reports/results-[hash].xml"
+    "mochaFile": "./results/reports/results-[hash].xml"
   },
   "reporterJsonJsReporterOptions": {
     "reportsPath": "./results/reports/"

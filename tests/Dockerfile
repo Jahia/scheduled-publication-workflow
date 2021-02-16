@@ -9,6 +9,9 @@ USER jahians:jahians
 
 RUN mkdir /tmp/run-artifacts
 RUN mkdir /tmp/results
+RUN mkdir /tmp/results/videos
+RUN mkdir /tmp/results/reports
+RUN mkdir /tmp/results/screenshots
 
 #CI=true reduces the verbosity of the installation logs
 RUN CI=true yarn install
