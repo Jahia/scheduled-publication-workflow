@@ -14,13 +14,6 @@ This module is currently in the POC (Proof of Concept) state
 - Jahia DXP 8.0.0.0+
 - workflow-extender module deployed on Jahia DXP server
 
-## Todo 
-
-- Implement screen to view all content waiting to be published
-- Try to display publication date in the workflow forms
-- Fix CSS issues in workflow forms
-- Fix issue when date has no value.
-
 ## Open-Source
 
 This is an Open-Source module, you can find more details about Open-Source @ Jahia [in this repository](https://github.com/Jahia/open-source).
