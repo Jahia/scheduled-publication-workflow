@@ -16,7 +16,7 @@ parameters:
     default: "tests/"
   TESTS_IMAGE:
     type: string
-    default: "jahia/scheduled-publication-workflow-test"
+    default: "jahia/scheduled-publication-workflow"
   MODULE_ID:
     type: string
     default: "scheduled-publication-workflow"
