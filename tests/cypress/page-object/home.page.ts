@@ -1,7 +1,7 @@
 import { BasePage } from './base.page'
 
 class HomePage extends BasePage {
-    goTo(user: authMethod) {
+    goTo(user?: authMethod) {
         cy.goTo('/sites/digitall/home.html', user)
         return this
     }

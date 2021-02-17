@@ -14,23 +14,24 @@ declare namespace Cypress {
 }
 
 interface authMethod {
-    username?: string
-    password?: string
+    username: string
+    password: string
 }
 
-Cypress.Commands.add('goTo', function (url: string, authMethod?: authMethod) {
-    if (authMethod === undefined) {
+Cypress.Commands.add('goTo', function (url: string, user?: authMethod) {
+    if (user === undefined) {
         cy.visit(url, {
             auth: {
                 username: Cypress.env('JAHIA_USERNAME'),
                 password: Cypress.env('JAHIA_PASSWORD'),
             },
         })
-    } else if (authMethod.username !== undefined && authMethod.password !== undefined) {
+    } else if (user.username !== undefined && user.password !== undefined) {
+        cy.log('visiting page with user', [url, user])
         cy.visit(url, {
             auth: {
-                username: authMethod.username,
-                password: authMethod.password,
+                username: user.username,
+                password: user.password,
             },
         })
     }
