@@ -22,7 +22,7 @@ parameters:
     default: "scheduled-publication-workflow"
   TESTRAIL_PROJECTNAME:
     type: string
-    default: "Scheduled Publication Workflow Module"
+    default: "Scheduled Publication Workflow"
   GITHUB_SLUG:
     type: string
     default: "jahia/scheduled-publication-workflow"
