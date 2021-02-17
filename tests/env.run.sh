@@ -36,12 +36,6 @@ sed -i -e "s/NEXUS_PASSWORD/${passwd}/g" /tmp/run-artifacts/${MANIFEST}
 echo " == Warming up the environment =="
 ./node_modules/jahia-cli/bin/run manifest:run --manifest=/tmp/run-artifacts/${MANIFEST} --jahiaAdminUrl=${JAHIA_URL} --nosandbox
 
-echo "START debug"
-ls -lah /tmp
-ls -lah /tmp/results
-whoami
-echo "END debug"
-
 echo " == Environment warmup complete =="
 echo "== Run tests =="
 CYPRESS_baseUrl=${JAHIA_URL} yarn e2e:ci
