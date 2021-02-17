@@ -43,7 +43,7 @@
     "instrument": "nyc instrument --compact=false cypress instrumented",
     "e2e:coverage": "yarn instrument && yarn cypress run --config integrationFolder=./instrumented/integration && yarn nyc report --reporter=html --report-dir=./results/coverage && yarn nyc report",
     "e2e:ci": "cypress run",
-    "e2e:debug": "cypress open",
+    "e2e:debug": "cypress open --config watchForFileChanges=true",
     "lint": "eslint . -c .eslintrc.json --ext .ts"
   },
   "nyc": {
