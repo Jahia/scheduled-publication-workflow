@@ -3,9 +3,6 @@ FROM cypress/base:14.15.4
 ADD . /tmp
 WORKDIR /tmp
 
-# RUN groupadd -r jahians && useradd --no-log-init -r -m -g jahians jahians
-# RUN chown -R jahians:jahians /tmp
-# USER jahians:jahians
 RUN adduser --disabled-password jahians
 RUN chown -R jahians:jahians /tmp
 USER jahians
