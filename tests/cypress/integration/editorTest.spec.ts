@@ -1,7 +1,7 @@
 import { home } from '../page-object/home.page'
 
-describe('navigation to user', () => {
-    it('navigates to the users page successfully', function () {
+describe('Editor Test', () => {
+    it('navigates to the homepage and click on Publish Page successfully', function () {
         cy.visit({
             url: '/cms/login',
             method: 'POST',
@@ -13,6 +13,8 @@ describe('navigation to user', () => {
             },
         })
         home.goTo({ username: 'editor', password: 'editor' })
-        cy.contains('EDITOR TEST').should('be.visible')
+        home.getIframeBody().contains('global network', { matchCase: false }).should('be.visible')
+        home.getIframeBody().get('.toolbar-item-publishone.action-bar-tool-item').click()
+        home.getIframeBody().get('.workflowactiondialog-ctn').contains('Request publication', { matchCase: false })
     })
 })
