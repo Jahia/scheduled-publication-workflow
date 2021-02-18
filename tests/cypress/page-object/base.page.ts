@@ -1,4 +1,5 @@
 export class BasePage {
+    protected BE_VISIBLE = 'be.visible'
     /**
      * Get any element of given type that contain given text
      * It does not require to be the direct element containing text
@@ -8,5 +9,24 @@ export class BasePage {
      */
     getByText(type: string, text: string): Cypress.Chainable {
         return cy.contains(type, text)
+    }
+
+    assertElementVisibleBySelector(selector: string): Cypress.Chainable {
+        return cy.get(selector).should(this.BE_VISIBLE)
+    }
+
+    getIframeBody(): Cypress.Chainable {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return (
+            cy
+                .get('iframe.gwt-Frame.window-iframe')
+                .its('0.contentDocument.body')
+                .should('not.be.empty')
+                // wraps "body" DOM element to allow
+                // chaining more Cypress commands, like ".find(...)"
+                // https://on.cypress.io/wrap
+                .then(cy.wrap)
+        )
     }
 }

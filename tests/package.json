@@ -14,6 +14,7 @@
     "cypress": "^6.5.0",
     "cypress-file-upload": "^5.0.2",
     "cypress-multi-reporters": "^1.4.0",
+    "dayjs": "^1.10.4",
     "diff": "^5.0.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
@@ -43,7 +44,7 @@
     "instrument": "nyc instrument --compact=false cypress instrumented",
     "e2e:coverage": "yarn instrument && yarn cypress run --config integrationFolder=./instrumented/integration && yarn nyc report --reporter=html --report-dir=./results/coverage && yarn nyc report",
     "e2e:ci": "cypress run",
-    "e2e:debug": "cypress open",
+    "e2e:debug": "env cypress open --config watchForFileChanges=true",
     "lint": "eslint . -c .eslintrc.json --ext .ts"
   },
   "nyc": {

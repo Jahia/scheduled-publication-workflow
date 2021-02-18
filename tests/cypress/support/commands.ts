@@ -9,15 +9,30 @@ declare namespace Cypress {
          * Custom command to navigate to url with default authentication
          * @example cy.goTo('/start')
          */
-        goTo(value: string): Chainable<Element>
+        goTo(value: string, user?: authMethod): Chainable<Element>
     }
 }
 
-Cypress.Commands.add('goTo', function (url: string) {
-    cy.visit(url, {
-        auth: {
-            username: Cypress.env('JAHIA_USERNAME'),
-            password: Cypress.env('JAHIA_PASSWORD'),
-        },
-    })
+interface authMethod {
+    username: string
+    password: string
+}
+
+Cypress.Commands.add('goTo', function (url: string, user?: authMethod) {
+    if (user === undefined) {
+        cy.visit(url, {
+            auth: {
+                username: Cypress.env('JAHIA_USERNAME'),
+                password: Cypress.env('JAHIA_PASSWORD'),
+            },
+        })
+    } else if (user.username !== undefined && user.password !== undefined) {
+        cy.log('visiting page with user', [url, user])
+        cy.visit(url, {
+            auth: {
+                username: user.username,
+                password: user.password,
+            },
+        })
+    }
 })
