@@ -63,6 +63,7 @@ describe('Editor Test', () => {
     })
 
     it('Received an email at jahia.editor@test.com', function () {
+        cy.visit({ url: Cypress.env('MAILHOG_URL') })
         cy.request({
             url: `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
             qs: { kind: 'to', query: 'jahia.editor@test.com' },
