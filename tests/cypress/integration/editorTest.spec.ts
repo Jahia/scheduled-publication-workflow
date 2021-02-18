@@ -60,10 +60,10 @@ describe('Editor Test', () => {
             .contains('Request publication', { matchCase: false })
             .should('be.visible')
             .click()
+        home.goTo({ username: 'editor', password: 'editor' })
     })
 
     it('Received an email at jahia.editor@test.com', function () {
-        cy.visit({ url: Cypress.env('MAILHOG_URL') })
         cy.request({
             url: `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
             qs: { kind: 'to', query: 'jahia.editor@test.com' },
