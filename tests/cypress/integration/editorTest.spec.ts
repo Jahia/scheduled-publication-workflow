@@ -1,14 +1,20 @@
 import { home } from '../page-object/home.page'
 import { apolloClient } from '../support/apollo'
 import { DocumentNode } from 'graphql'
-import { deleteNode } from '../support/gql'
+import { abortWorkflows, clearAllLocks, deleteNode } from '../support/gql'
 import * as dayjs from 'dayjs'
 
 describe('Editor Test', () => {
     let addRichTextToPage: DocumentNode
 
     before(async function () {
+        cy.request({
+            url: `${Cypress.env('MAILHOG_URL')}/api/v1/messages`,
+            method: 'DELETE',
+        })
         addRichTextToPage = require(`graphql-tag/loader!../fixtures/addRichTextToPage.graphql`)
+        await abortWorkflows()
+        await clearAllLocks('/sites/digitall/home')
         await deleteNode('/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content')
         const client = apolloClient()
         await client.mutate({
@@ -19,6 +25,16 @@ describe('Editor Test', () => {
                 text: 'New Content Created By Editor',
             },
             errorPolicy: 'ignore',
+        })
+    })
+
+    after(function () {
+        cy.visit({
+            url: '/cms/logout',
+            method: 'GET',
+            qs: {
+                redirect: '/sites/digitall/home.html',
+            },
         })
     })
 
@@ -44,5 +60,18 @@ describe('Editor Test', () => {
             .contains('Request publication', { matchCase: false })
             .should('be.visible')
             .click()
+    })
+
+    it('Received an email at jahia.editor@test.com', function () {
+        cy.request({
+            url: `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
+            qs: { kind: 'to', query: 'jahia.editor@test.com' },
+        }).then((resp) => {
+            expect(resp.status).to.eq(200)
+            expect(resp.body.total).to.eq(1)
+            expect(resp.body.items[0].Content.Headers.Subject[0]).to.eq(
+                'Validation request by Editor Test prior to publication on Digitall',
+            )
+        })
     })
 })
