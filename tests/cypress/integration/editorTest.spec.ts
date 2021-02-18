@@ -1,6 +1,26 @@
 import { home } from '../page-object/home.page'
+import { apolloClient } from '../support/apollo'
+import { DocumentNode } from 'graphql'
+import { deleteNode } from '../support/gql'
 
 describe('Editor Test', () => {
+    let addRichTextToPage: DocumentNode
+
+    before(async function () {
+        addRichTextToPage = require(`graphql-tag/loader!../fixtures/addRichTextToPage.graphql`)
+        await deleteNode('/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content')
+        const client = apolloClient()
+        await client.mutate({
+            mutation: addRichTextToPage,
+            variables: {
+                name: 'editor-new-content',
+                path: '/sites/digitall/home/area-main/area/area/area/area-main',
+                text: 'New Content Created By Editor',
+            },
+            errorPolicy: 'ignore',
+        })
+    })
+
     it('navigates to the homepage and click on Publish Page successfully', function () {
         cy.visit({
             url: '/cms/login',
@@ -15,6 +35,8 @@ describe('Editor Test', () => {
         home.goTo({ username: 'editor', password: 'editor' })
         home.getIframeBody().contains('global network', { matchCase: false }).should('be.visible')
         home.getIframeBody().get('.toolbar-item-publishone.action-bar-tool-item').click()
-        home.getIframeBody().get('.workflowactiondialog-ctn').contains('Request publication', { matchCase: false })
+        const workflowactiondialog = home.getIframeBody().get('.workflowactiondialog-ctn')
+        workflowactiondialog.contains('Request publication', { matchCase: false })
+        workflowactiondialog.get('input[name="date"]').should('be.visible')
     })
 })
