@@ -2,6 +2,7 @@ import { home } from '../page-object/home.page'
 import { apolloClient } from '../support/apollo'
 import { DocumentNode } from 'graphql'
 import { deleteNode } from '../support/gql'
+import * as dayjs from 'dayjs'
 
 describe('Editor Test', () => {
     let addRichTextToPage: DocumentNode
@@ -35,8 +36,13 @@ describe('Editor Test', () => {
         home.goTo({ username: 'editor', password: 'editor' })
         home.getIframeBody().contains('global network', { matchCase: false }).should('be.visible')
         home.getIframeBody().get('.toolbar-item-publishone.action-bar-tool-item').click()
-        const workflowactiondialog = home.getIframeBody().get('.workflowactiondialog-ctn')
-        workflowactiondialog.contains('Request publication', { matchCase: false })
+        const workflowactiondialog = home.getIframeBody().get('.workflowactiondialog-card')
         workflowactiondialog.get('input[name="date"]').should('be.visible')
+        workflowactiondialog.get('input[name="date"]').type(dayjs().add(5, 'minute').format('DD.MM.YYYY HH:mm'))
+        workflowactiondialog
+            .get('.x-panel-bbar')
+            .contains('Request publication', { matchCase: false })
+            .should('be.visible')
+            .click()
     })
 })
