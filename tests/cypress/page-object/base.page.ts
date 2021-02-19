@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { abortWorkflows, clearAllLocks, deleteNode } from '../support/gql'
 import { apolloClient } from '../support/apollo'
 
 export class BasePage {
     protected BE_VISIBLE = 'be.visible'
     public static readonly SITE = 'digitall'
+
     /**
      * Get any element of given type that contain given text
      * It does not require to be the direct element containing text
@@ -55,15 +57,26 @@ export class BasePage {
         })
     }
 
-    validateEmailReceivedWithCorrectSubject(url: string, to: string, subject: string): void {
-        cy.request({
-            url: url,
-            qs: { kind: 'to', query: to },
-        }).then((resp) => {
-            expect(resp.status).to.eq(200)
-            expect(resp.body.total).to.eq(1)
-            expect(resp.body.items[0].Content.Headers.Subject[0]).to.eq(subject)
-        })
+    validateEmailReceivedWithCorrectSubject(
+        url: string,
+        to: string,
+        subject: string,
+        formattedScheduledDate?: string,
+    ): Cypress.Chainable {
+        return cy
+            .request({
+                url: url,
+                qs: { kind: 'to', query: to },
+            })
+            .then((resp) => {
+                expect(resp.status).to.eq(200)
+                expect(resp.body.total).to.eq(1)
+                expect(resp.body.items[0].Content.Headers.Subject[0]).to.eq(subject)
+                if (formattedScheduledDate !== undefined) {
+                    expect(resp.body.items[0].Content.Body).to.contain('The content is scheduled to be published on:')
+                    expect(resp.body.items[0].Content.Body).to.contain(formattedScheduledDate)
+                }
+            })
     }
 
     logout(): void {
