@@ -19,8 +19,16 @@ JCRCallback<Object> callback = new JCRCallback<Object>() {
         def user = ServicesRegistry.instance.jahiaUserManagerService.createUser("editor", "digitall", "editor", properties, session)
         def siteByKey = ServicesRegistry.instance.jahiaSitesService.getSiteByKey("digitall", session)
         siteByKey.grantRoles("u:editor", new HashSet<String>(["editor"]))
+
+        java.util.Properties reviewerProperties = new java.util.Properties();
+        reviewerProperties.setProperty("emailNotificationsDisabled", "false");
+        reviewerProperties.setProperty("j:email", "jahia.reviewer@test.com");
+        reviewerProperties.setProperty("j:firstName", "Ace");
+        reviewerProperties.setProperty("j:lastName", "Ventura");
+        def reviewer = ServicesRegistry.instance.jahiaUserManagerService.createUser("ace", "digitall", "ventura", reviewerProperties, session)
+        siteByKey.grantRoles("u:ace", new HashSet<String>(["reviewer"]))
         session.save()
-        return null;
+        return null
     }
 }
 
