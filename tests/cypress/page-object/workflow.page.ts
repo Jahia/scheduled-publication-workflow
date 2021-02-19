@@ -10,7 +10,7 @@ class WorkflowPage extends BasePage {
         return cy
     }
 
-    openWorkflowAndVerifyButtons() {
+    openWorkflowAsReviewerAndVerifyButtons() {
         this.login(WorkflowPage.REVIEWER_USERNAME, WorkflowPage.REVIEWER_PASSWORD, WorkflowPage.SITE)
         this.goTo({ username: WorkflowPage.REVIEWER_PASSWORD, password: WorkflowPage.REVIEWER_PASSWORD })
         this.getByText('label', 'en - Default started by editor').should(this.BE_VISIBLE)

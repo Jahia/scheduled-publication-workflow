@@ -13,7 +13,7 @@ describe('Reviewer test reject', () => {
     })
 
     it('Logins as a reviewer, checks buttons and readonly date and rejects the publication', function () {
-        workflowPage.openWorkflowAndVerifyButtons()
+        workflowPage.openWorkflowAsReviewerAndVerifyButtons()
         workflowPage.getByText('button', 'Reject').click()
     })
 
