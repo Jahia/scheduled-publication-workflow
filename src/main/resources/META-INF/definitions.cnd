@@ -3,8 +3,8 @@
 
 [jnt:advancedPublish] > mix:title
  - jcr:title (STRING) i18n
- - date (date,datetimepicker)
+ - scheduledDate (date,datetimepicker)
 
 [jnt:advancedPublishReadonlyDate] > mix:title
  - jcr:title (STRING) i18n
- - date (date,datetimepicker) protected
+ - scheduledDate (date,datetimepicker) protected

@@ -53,8 +53,8 @@ describe('Editor Test', () => {
         home.getIframeBody().contains('global network', { matchCase: false }).should('be.visible')
         home.getIframeBody().get('.toolbar-item-publishone.action-bar-tool-item').click()
         const workflowactiondialog = home.getIframeBody().get('.workflowactiondialog-card')
-        workflowactiondialog.get('input[name="date"]').should('be.visible')
-        workflowactiondialog.get('input[name="date"]').type(dayjs().add(5, 'minute').format('DD.MM.YYYY HH:mm'))
+        workflowactiondialog.get('input[name="scheduledDate"]').should('be.visible')
+        workflowactiondialog.get('input[name="scheduledDate"]').type(dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm'))
         workflowactiondialog
             .get('.x-panel-bbar')
             .contains('Request publication', { matchCase: false })
@@ -70,9 +70,11 @@ describe('Editor Test', () => {
         }).then((resp) => {
             expect(resp.status).to.eq(200)
             expect(resp.body.total).to.eq(1)
-            expect(resp.body.items[0].Content.Headers.Subject[0]).to.eq(
-                'Validation request by Editor Test prior to publication on Digitall',
+            expect(resp.body.items[0].Content.Headers.Subject[0]).to.match(
+                /Validation request by Editor Test prior to publication on Digitall.*/,
             )
+            expect(resp.body.items[0].Content.Body).to.contain('The content is scheduled to be published on:')
+            expect(resp.body.items[0].Content.Body).to.contain(dayjs().add(1, 'day').format('MMM DD, YYYY, h:mm A'))
         })
     })
 })
