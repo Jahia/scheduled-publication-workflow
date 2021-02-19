@@ -5,7 +5,7 @@ import { apolloClient } from '../support/apollo'
 export class BasePage {
     protected BE_VISIBLE = 'be.visible'
     public static readonly SITE = 'digitall'
-
+  
     /**
      * Get any element of given type that contain given text
      * It does not require to be the direct element containing text
