@@ -1,11 +1,10 @@
-import {home} from '../page-object/home.page';
-import {workflowPage} from '../page-object/workflow.page';
-
+import { home } from '../page-object/home.page'
+import { workflowPage } from '../page-object/workflow.page'
 
 describe('Reviewer test reject', () => {
     before(async function () {
-        await home.prepareContentForTest();
-        home.publishContentAsEditorAndValidate();
+        await home.prepareContentForTest()
+        home.publishContentAsEditorAndValidate()
         cy.request({
             url: `${Cypress.env('MAILHOG_URL')}/api/v1/messages`,
             method: 'DELETE',
@@ -13,16 +12,17 @@ describe('Reviewer test reject', () => {
         home.logout()
     })
 
-
     it('Logins as a reviewer, checks buttons and readonly date and rejects the publication', function () {
         workflowPage.openWorkflowAndVerifyButtons()
         workflowPage.getByText('button', 'Reject').click()
-        cy.wait(2000);
     })
 
     it('Received an rejected validation email at jahia.reviewer@test.com', function () {
-        workflowPage.validateEmailReceivedWithCorrectSubject( `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
-            'jahia.editor@test.com','Publication rejected by Ace Ventura for Digitall')
+        workflowPage.validateEmailReceivedWithCorrectSubject(
+            `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
+            'jahia.editor@test.com',
+            'Publication rejected by Ace Ventura for Digitall',
+        )
     })
 
     after(function () {

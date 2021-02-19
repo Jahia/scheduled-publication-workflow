@@ -1,10 +1,9 @@
-import {home} from '../page-object/home.page';
-import * as dayjs from 'dayjs';
+import { home } from '../page-object/home.page'
+import * as dayjs from 'dayjs'
 
-const EDITOR_NAME_AND_PASSWORD = 'editor';
-const SITE = 'digitall';
+const EDITOR_NAME_AND_PASSWORD = 'editor'
+const SITE = 'digitall'
 describe('Editor Test', () => {
-
     before(async function () {
         await home.prepareContentForTest()
     })
@@ -30,6 +29,10 @@ describe('Editor Test', () => {
     })
 
     it('Received an email at jahia.editor@test.com', function () {
-        home.validateEmailReceivedWithCorrectSubject(`${Cypress.env('MAILHOG_URL')}/api/v2/search`, 'jahia.editor@test.com', 'Validation request by Editor Test prior to publication on Digitall')
+        home.validateEmailReceivedWithCorrectSubject(
+            `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
+            'jahia.editor@test.com',
+            'Validation request by Editor Test prior to publication on Digitall',
+        )
     })
 })
