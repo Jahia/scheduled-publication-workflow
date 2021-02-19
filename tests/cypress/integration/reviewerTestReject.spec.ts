@@ -17,13 +17,17 @@ describe('Reviewer test reject', () => {
         workflowPage.getByText('button', 'Reject').click()
     })
 
-    it('Received an rejected validation email at jahia.reviewer@test.com', function () {
-        workflowPage.validateEmailReceivedWithCorrectSubject(
-            `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
-            'jahia.editor@test.com',
-            'Publication rejected by Ace Ventura for Digitall',
-        )
-    })
+    it(
+        'Received an rejected validation email at jahia.reviewer@test.com',
+        { retries: { openMode: 1, runMode: 2 } },
+        function () {
+            workflowPage.validateEmailReceivedWithCorrectSubject(
+                `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
+                'jahia.editor@test.com',
+                'Publication rejected by Ace Ventura for Digitall',
+            )
+        },
+    )
 
     after(function () {
         workflowPage.logout()
