@@ -15,8 +15,6 @@ export const apolloClient = (authMethod?: authMethod): ApolloClient<NormalizedCa
     } else if (authMethod.username !== undefined && authMethod.password !== undefined) {
         headers.authorization = `Basic ${btoa(authMethod.username + ':' + authMethod.password)}`
     }
-    // Otherwise, no headers are sent and user is considered guest (i.e. apolloClient({}))
-    cy.log(JSON.stringify(headers))
 
     return new ApolloClient({
         link: new HttpLink({

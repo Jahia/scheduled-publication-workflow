@@ -20,8 +20,8 @@ class WorkflowPage extends BasePage {
         this.getByText('button', 'Accept').should(this.BE_VISIBLE)
         this.getByText('button', 'Publish now').should(this.BE_VISIBLE)
         this.getByText('button', 'Cancel').should(this.BE_VISIBLE)
-        cy.get('input[name=date]').should(this.BE_VISIBLE)
-        cy.get('input[name=date]').should('have.attr', 'readonly')
+        cy.get('input[name=scheduledDate]').should(this.BE_VISIBLE)
+        cy.get('input[name=scheduledDate]').should('have.attr', 'readonly')
     }
 }
 

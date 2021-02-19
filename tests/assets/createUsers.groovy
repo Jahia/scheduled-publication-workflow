@@ -16,7 +16,7 @@ JCRCallback<Object> callback = new JCRCallback<Object>() {
         properties.setProperty("j:email", "jahia.editor@test.com");
         properties.setProperty("j:firstName", "Editor");
         properties.setProperty("j:lastName", "Test");
-        def user = ServicesRegistry.instance.jahiaUserManagerService.createUser("editor", "digitall", "editor", properties, session)
+        ServicesRegistry.instance.jahiaUserManagerService.createUser("editor", "digitall", "editor", properties, session)
         def siteByKey = ServicesRegistry.instance.jahiaSitesService.getSiteByKey("digitall", session)
         siteByKey.grantRoles("u:editor", new HashSet<String>(["editor"]))
 
@@ -25,7 +25,7 @@ JCRCallback<Object> callback = new JCRCallback<Object>() {
         reviewerProperties.setProperty("j:email", "jahia.reviewer@test.com");
         reviewerProperties.setProperty("j:firstName", "Ace");
         reviewerProperties.setProperty("j:lastName", "Ventura");
-        def reviewer = ServicesRegistry.instance.jahiaUserManagerService.createUser("ace", "digitall", "ventura", reviewerProperties, session)
+        ServicesRegistry.instance.jahiaUserManagerService.createUser("ace", "digitall", "ventura", reviewerProperties, session)
         siteByKey.grantRoles("u:ace", new HashSet<String>(["reviewer"]))
         session.save()
         return null

@@ -16,7 +16,7 @@ class HomePage extends BasePage {
         home.getIframeBody().contains('global network', { matchCase: false }).should(this.BE_VISIBLE)
         home.getIframeBody().get('.toolbar-item-publishone.action-bar-tool-item').click()
         const workflowactiondialog = home.getIframeBody().get('.workflowactiondialog-card')
-        workflowactiondialog.get('input[name="date"]').type(dayjs().add(5, 'minute').format('DD.MM.YYYY HH:mm'))
+        workflowactiondialog.get('input[name="scheduledDate"]').type(dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm'))
         workflowactiondialog
             .get('.x-panel-bbar')
             .contains('Request publication', { matchCase: false })

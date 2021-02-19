@@ -63,6 +63,11 @@ html:
                                                 <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: &quot;Nunito Sans&quot;, Helvetica, Arial, sans-serif;">
                                                     ${date.format(
                                                         "short","short",$submissionDate,$locale)}</p>
+                                                #if ($scheduledDate)
+                                                <p style="color: rgb(130, 136, 146); font-size: 14px; font-family: 'Nunito Sans', Helvetica, Arial, sans-serif;">
+                                                    <strong style="color: rgb(82, 92, 98); font-weight: 600; font-size: 14px; font-family: 'Nunito Sans', Helvetica, Arial, sans-serif;">La publication du contenu est prévu pour le :<br/>${date.format("medium","short",$scheduledDate.getValueAsDate(),$locale)}</strong>
+                                                </p>
+                                                #end
                                             </td>
                                         </tr>
                                         </tbody>
