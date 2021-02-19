@@ -28,12 +28,12 @@ describe('Editor Test', () => {
         home.goTo({ username: EDITOR_NAME_AND_PASSWORD, password: EDITOR_NAME_AND_PASSWORD })
     })
 
-    it('Received an email at jahia.editor@test.com', function () {
+    it('Received an email at jahia.editor@test.com', { retries: { openMode: 1, runMode: 2 } }, function () {
         home.validateEmailReceivedWithCorrectSubject(
             `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
             'jahia.editor@test.com',
             'Validation request by Editor Test prior to publication on Digitall',
-            dayjs().add(1, 'day').format('MMM DD, YYYY, h:mm A'),
+            dayjs().add(1, 'day').format('MMM DD, YYYY'),
         )
     })
 })

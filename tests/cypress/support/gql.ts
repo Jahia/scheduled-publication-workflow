@@ -4,9 +4,14 @@ import gql from 'graphql-tag'
 import { apolloClient } from './apollo'
 import { ApolloClient, NormalizedCacheObject } from 'apollo-client-preset'
 
+const rootClient = apolloClient()
+
+export function getRootClient(): ApolloClient<NormalizedCacheObject> {
+    return rootClient
+}
+
 export async function deleteNode(path: string): Promise<any> {
-    const client = apolloClient()
-    const response = await client.mutate({
+    const response = await rootClient.mutate({
         mutation: gql`
             mutation($path: String!) {
                 jcr(workspace: EDIT) {
@@ -22,17 +27,16 @@ export async function deleteNode(path: string): Promise<any> {
     return response.data
 }
 
-export async function getActiveUserWorkflow(apolloClient: ApolloClient<NormalizedCacheObject>): Promise<any> {
+export async function getActiveUserWorkflow(userClient: ApolloClient<NormalizedCacheObject>): Promise<any> {
     const activeUserWorkflowQuery = require(`graphql-tag/loader!../fixtures/activeUserWorkflow.graphql`)
-    const response = await apolloClient.query({
+    const response = await userClient.query({
         query: activeUserWorkflowQuery,
     })
     return response.data
 }
 
 export async function abortWorkflows(): Promise<any> {
-    const client = apolloClient()
-    const response = await client.mutate({
+    const response = await rootClient.mutate({
         mutation: gql`
             mutation {
                 mutateWorkflows(definition: "jBPM:default-workflow") {
@@ -49,8 +53,7 @@ export async function abortWorkflows(): Promise<any> {
 }
 
 export async function clearAllLocks(path: string): Promise<any> {
-    const client = apolloClient()
-    const response = await client.mutate({
+    const response = await rootClient.mutate({
         mutation: gql`
             mutation($path: String!) {
                 jcr(workspace: EDIT) {
@@ -64,6 +67,26 @@ export async function clearAllLocks(path: string): Promise<any> {
             path: path,
         },
         errorPolicy: 'ignore',
+    })
+    return response.data
+}
+
+export async function getNode(path: string): Promise<any> {
+    const response = await rootClient.query({
+        query: gql`
+            query($path: String!) {
+                jcr(workspace: EDIT) {
+                    nodeByPath(path: $path) {
+                        uuid
+                    }
+                }
+            }
+        `,
+        variables: {
+            path: path,
+        },
+        errorPolicy: 'all',
+        fetchPolicy: 'network-only',
     })
     return response.data
 }

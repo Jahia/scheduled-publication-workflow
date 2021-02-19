@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { abortWorkflows, clearAllLocks, deleteNode } from '../support/gql'
-import { apolloClient } from '../support/apollo'
+import { abortWorkflows, clearAllLocks, deleteNode, getNode, getRootClient } from '../support/gql'
 
 export class BasePage {
     protected BE_VISIBLE = 'be.visible'
@@ -39,21 +38,31 @@ export class BasePage {
         cy.request({
             url: `${Cypress.env('MAILHOG_URL')}/api/v1/messages`,
             method: 'DELETE',
+        }).then(() => {
+            cy.log('deleted all messages from home')
         })
         const addRichTextToPage = require(`graphql-tag/loader!../fixtures/addRichTextToPage.graphql`)
         await abortWorkflows()
         await clearAllLocks('/sites/digitall/home')
+        await clearAllLocks('/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content')
+        await clearAllLocks('/sites/digitall/home/area-main/area/area/area/area-main')
         await deleteNode('/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content')
-        const client = apolloClient()
-        await client.mutate({
+        const client = getRootClient()
+        const newNodeMutation = await client.mutate({
             mutation: addRichTextToPage,
             variables: {
                 name: 'editor-new-content',
                 path: '/sites/digitall/home/area-main/area/area/area/area-main',
                 text: 'New Content Created By Editor',
             },
-            errorPolicy: 'ignore',
+            errorPolicy: 'all',
+            fetchPolicy: 'no-cache',
         })
+        expect(newNodeMutation.errors).to.be.undefined
+        const newContentNode = await getNode(
+            '/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content',
+        )
+        expect(newContentNode.jcr.nodeByPath.uuid).not.to.be.undefined
     }
 
     validateEmailReceivedWithCorrectSubject(
