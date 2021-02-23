@@ -51,7 +51,7 @@ public class CheckDateWorkItemHandler implements WorkItemHandler {
         Map<String,Object> results = new HashMap<>();
 
         final Map<String, Object> vars = workItem.getParameters();
-        WorkflowVariable dateWorkflowVariable = (WorkflowVariable) vars.get("date");
+        WorkflowVariable dateWorkflowVariable = (WorkflowVariable) vars.get("scheduledDate");
         Date date = null;
         if (dateWorkflowVariable != null) {
             date = dateWorkflowVariable.getValueAsDate();
