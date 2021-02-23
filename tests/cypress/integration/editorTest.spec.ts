@@ -5,7 +5,7 @@ const EDITOR_NAME_AND_PASSWORD = 'editor'
 const SITE = 'digitall'
 describe('Editor Test', () => {
     before(async function () {
-        await home.prepareContentForTest()
+        await home.prepareContentForTest('/sites/digitall', 'test-content-one', 'Nice test content')
     })
 
     after(function () {

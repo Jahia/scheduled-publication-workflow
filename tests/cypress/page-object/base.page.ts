@@ -34,33 +34,29 @@ export class BasePage {
         )
     }
 
-    async prepareContentForTest(): Promise<void> {
-        cy.request({
-            url: `${Cypress.env('MAILHOG_URL')}/api/v1/messages`,
-            method: 'DELETE',
-        }).then(() => {
-            cy.log('deleted all messages from home')
-        })
+    async prepareContentForTest(sitePath: string, contentName: string, contextText: string): Promise<void> {
+        this.cleanUpEmails()
         const addRichTextToPage = require(`graphql-tag/loader!../fixtures/addRichTextToPage.graphql`)
         await abortWorkflows()
-        await clearAllLocks('/sites/digitall/home')
-        await clearAllLocks('/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content')
-        await clearAllLocks('/sites/digitall/home/area-main/area/area/area/area-main')
-        await deleteNode('/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content')
+        await clearAllLocks(`${sitePath}/home`)
+        await clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
+        await clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main`)
+        await deleteNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
         const client = getRootClient()
         const newNodeMutation = await client.mutate({
             mutation: addRichTextToPage,
             variables: {
-                name: 'editor-new-content',
-                path: '/sites/digitall/home/area-main/area/area/area/area-main',
-                text: 'New Content Created By Editor',
+                name: contentName,
+                path: `${sitePath}/home/area-main/area/area/area/area-main`,
+                text: contextText,
             },
             errorPolicy: 'all',
             fetchPolicy: 'no-cache',
         })
         expect(newNodeMutation.errors).to.be.undefined
+        console.log(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`);
         const newContentNode = await getNode(
-            '/sites/digitall/home/area-main/area/area/area/area-main/editor-new-content',
+            `${sitePath}/home/area-main/area/area/area/area-main/${contentName}`,
         )
         expect(newContentNode.jcr.nodeByPath.uuid).not.to.be.undefined
     }
@@ -85,6 +81,16 @@ export class BasePage {
                     expect(resp.body.items[0].Content.Body).to.contain(formattedScheduledDate)
                 }
             })
+    }
+
+    cleanUpEmails() : void {
+        cy.log('deleting all messages');
+        cy.request({
+            url: `${Cypress.env('MAILHOG_URL')}/api/v1/messages`,
+            method: 'DELETE',
+        }).then(() => {
+            cy.log('deleted all messages');
+        });
     }
 
     logout(): void {

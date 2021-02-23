@@ -9,6 +9,8 @@ services:
       - "${JAHIA_PORT}:8080"
     extra_hosts:
       - jahia:127.0.0.1
+    environment:
+      - TZ=America/Toronto
     networks:
       - stack
   # Cypress container
