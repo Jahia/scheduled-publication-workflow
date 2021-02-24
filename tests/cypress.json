@@ -15,5 +15,7 @@
         "JAHIA_USERNAME": "root",
         "JAHIA_PASSWORD": "root",
         "MAILHOG_URL": "http://mailhog.test:8025"
-    }
+    },
+    "viewportWidth": 1366,
+    "viewportHeight": 768
 }

@@ -1,10 +1,9 @@
-import {workflowPage} from '../page-object/workflow.page';
-import * as dayjs from 'dayjs';
-
+import { workflowPage } from '../page-object/workflow.page'
+import * as dayjs from 'dayjs'
 
 describe('Editor in chief reschedule test', () => {
     before(async function () {
-        await workflowPage.requestPublicationAndValidateContent(dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm'));
+        await workflowPage.requestPublicationAndValidateContent(dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm'))
     })
 
     it('Logins as a editor in chief, goes to the workflow dashboard and successfully reschedules', function () {
