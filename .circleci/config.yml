@@ -262,6 +262,7 @@ jobs:
             if [[ ! -e .env ]]; then
               mv .env.example .env
             fi
+            echo "$JAHIA_LICENSE_801_FULL" > /tmp/license.xml
             docker-compose -f docker-compose.yml up -d jahia mailhog
           no_output_timeout: 2h
           environment:
