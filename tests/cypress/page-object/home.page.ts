@@ -1,4 +1,4 @@
-import {BasePage} from './base.page';
+import { BasePage } from './base.page'
 
 class HomePage extends BasePage {
     public static readonly EDITOR_NAME_AND_PASSWORD = 'editor'
@@ -18,7 +18,10 @@ class HomePage extends BasePage {
         if (date) {
             workflowactiondialog.get('input[name="scheduledDate"]').type(date)
         } else {
-            workflowactiondialog.get('input[name="jcr:title"]').invoke('val').should('contain', 'en - Default started by editor')
+            workflowactiondialog
+                .get('input[name="jcr:title"]')
+                .invoke('val')
+                .should('contain', 'en - Default started by editor')
         }
         workflowactiondialog
             .get('.x-panel-bbar')

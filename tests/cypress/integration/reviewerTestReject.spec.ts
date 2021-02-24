@@ -1,8 +1,8 @@
 import { home } from '../page-object/home.page'
 import { workflowPage } from '../page-object/workflow.page'
-import * as dayjs from 'dayjs';
+import * as dayjs from 'dayjs'
 
-const date = dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm');
+const date = dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm')
 
 describe('Reviewer test reject', () => {
     before(async function () {

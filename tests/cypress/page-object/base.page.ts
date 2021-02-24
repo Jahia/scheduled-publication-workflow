@@ -54,10 +54,8 @@ export class BasePage {
             fetchPolicy: 'no-cache',
         })
         expect(newNodeMutation.errors).to.be.undefined
-        console.log(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`);
-        const newContentNode = await getNode(
-            `${sitePath}/home/area-main/area/area/area/area-main/${contentName}`,
-        )
+        console.log(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
+        const newContentNode = await getNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
         expect(newContentNode.jcr.nodeByPath.uuid).not.to.be.undefined
     }
 
@@ -83,14 +81,14 @@ export class BasePage {
             })
     }
 
-    cleanUpEmails() : void {
-        cy.log('deleting all messages');
+    cleanUpEmails(): void {
+        cy.log('deleting all messages')
         cy.request({
             url: `${Cypress.env('MAILHOG_URL')}/api/v1/messages`,
             method: 'DELETE',
         }).then(() => {
-            cy.log('deleted all messages');
-        });
+            cy.log('deleted all messages')
+        })
     }
 
     logout(): void {

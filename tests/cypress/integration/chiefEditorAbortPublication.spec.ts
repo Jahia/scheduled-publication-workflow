@@ -1,9 +1,8 @@
-import {workflowPage} from '../page-object/workflow.page';
-
+import { workflowPage } from '../page-object/workflow.page'
 
 describe('Editor in chief abort publication test', () => {
     before(async function () {
-        await workflowPage.requestPublicationAndValidateContent();
+        await workflowPage.requestPublicationAndValidateContent()
     })
 
     it('Logins as a editor in chief, goes to the workflow dashboard and aborts the publication', function () {
@@ -18,7 +17,7 @@ describe('Editor in chief abort publication test', () => {
             workflowPage.validateEmailReceivedWithCorrectSubject(
                 `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
                 'jahia.editor@test.com',
-                'Publication rejected by John McClane for Digitall'
+                'Publication rejected by John McClane for Digitall',
             )
         },
     )
