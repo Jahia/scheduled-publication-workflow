@@ -5,6 +5,8 @@ services:
     container_name: jahia
     depends_on:
       - mailhog
+    volumes:
+      - /tmp/license.xml:/usr/local/tomcat/conf/digital-factory-config/jahia/license.xml:ro
     ports:
       - "${JAHIA_PORT}:8080"
     extra_hosts:
