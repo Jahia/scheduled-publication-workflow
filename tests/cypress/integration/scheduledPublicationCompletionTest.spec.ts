@@ -22,7 +22,7 @@ function checkForPublishedEmailRecursively() {
         url: `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
         qs: { kind: 'to', query: 'jahia.editor@test.com' },
     }).then((resp) => {
-        if (dayjs() > publicationTime) {
+        if (dayjs() > publicationTime.add(1, 'minute')) {
             throw new Error('Something wrong with the test, email did not arrive for the publication')
         }
         if (resp.status === 200 && resp.body.total === 1) {
@@ -38,7 +38,7 @@ function checkForPublishedEmailRecursively() {
 
 describe('Editor in chief reschedule test', () => {
     before(async function () {
-        publicationTime = dayjs().add(1, 'minute')
+        publicationTime = dayjs().add(2, 'minute')
         await workflowPage.requestPublicationAndValidateContent(publicationTime.format('DD.MM.YYYY HH:mm'))
     })
 
