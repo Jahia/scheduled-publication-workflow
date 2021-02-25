@@ -16,7 +16,7 @@ jobs:
     source: https://devtools.jahia.com/nexus/service/local/artifact/maven/redirect?r=jahia-snapshots&g=org.jahia.modules&a=workflow-extender&v=LATEST
     filepath: /tmp/workflow-extender-LATEST.jar
   - type: module
-    id: sandbox
+    id: workflow-extender
     filepath: /tmp/workflow-extender-LATEST.jar
   - type: module
     id: graphql-dxm-provider
