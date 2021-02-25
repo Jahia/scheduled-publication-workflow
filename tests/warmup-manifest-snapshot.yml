@@ -35,4 +35,4 @@ jobs:
   - type: groovy
     filepath: ./assets/setScheduledWorkflowRule.groovy
   - type: groovy
-      filepath: ./assets/createUsers.groovy
+    filepath: ./assets/createUsers.groovy
