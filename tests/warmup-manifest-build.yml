@@ -22,7 +22,7 @@ jobs:
     id: graphql-dxm-provider
     filepath: /tmp/graphql-dxm-provider-LATEST.jar
   - type: module
-    id: sandbox
+    id: scheduled-publication-workflow
     filepath: /tmp/artifacts/scheduled-publication-workflow-SNAPSHOT.jar
   - type: groovy
     filepath: ./assets/setMailServer.groovy
