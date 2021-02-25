@@ -9,9 +9,6 @@ jobs:
     password: NEXUS_PASSWORD
     source: https://devtools.jahia.com/nexus/service/local/artifact/maven/redirect?r=jahia-snapshots&g=org.jahia.modules&a=graphql-dxm-provider&v=LATEST
     filepath: /tmp/graphql-dxm-provider-LATEST.jar
-  - type: module
-    id: graphql-dxm-provider
-    filepath: /tmp/graphql-dxm-provider-LATEST.jar
   - type: asset
     fetch: http
     username: NEXUS_USERNAME
@@ -19,8 +16,11 @@ jobs:
     source: https://devtools.jahia.com/nexus/service/local/artifact/maven/redirect?r=jahia-snapshots&g=org.jahia.modules&a=workflow-extender&v=LATEST
     filepath: /tmp/workflow-extender-LATEST.jar
   - type: module
-    id: sandbox
+    id: workflow-extender
     filepath: /tmp/workflow-extender-LATEST.jar
+  - type: module
+    id: graphql-dxm-provider
+    filepath: /tmp/graphql-dxm-provider-LATEST.jar
   - type: asset
     fetch: http
     username: NEXUS_USERNAME
@@ -28,7 +28,7 @@ jobs:
     source: https://devtools.jahia.com/nexus/service/local/artifact/maven/redirect?r=jahia-snapshots&g=org.jahia.modules&a=scheduled-publication-workflow&v=LATEST
     filepath: /tmp/scheduled-publication-workflow-LATEST.jar
   - type: module
-    id: sandbox
+    id: scheduled-publication-workflow
     filepath: /tmp/scheduled-publication-workflow-LATEST.jar
   - type: groovy
     filepath: ./assets/setMailServer.groovy
