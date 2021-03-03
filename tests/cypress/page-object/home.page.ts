@@ -25,7 +25,7 @@ class HomePage extends BasePage {
         }
         workflowactiondialog
             .get('.x-panel-bbar')
-            .contains('Request publication', { matchCase: false })
+            .contains('Start the publication flow', { matchCase: false })
             .should('be.visible')
             .click()
         home.goTo({ username: HomePage.EDITOR_NAME_AND_PASSWORD, password: HomePage.EDITOR_NAME_AND_PASSWORD })

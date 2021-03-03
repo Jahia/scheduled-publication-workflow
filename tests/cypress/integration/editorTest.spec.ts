@@ -22,7 +22,7 @@ describe('Editor Test', () => {
         workflowactiondialog.get('input[name="scheduledDate"]').type(dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm'))
         workflowactiondialog
             .get('.x-panel-bbar')
-            .contains('Request publication', { matchCase: false })
+            .contains('Start the publication flow', { matchCase: false })
             .should('be.visible')
             .click()
         home.goTo({ username: EDITOR_NAME_AND_PASSWORD, password: EDITOR_NAME_AND_PASSWORD })
