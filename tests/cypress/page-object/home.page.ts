@@ -21,7 +21,7 @@ class HomePage extends BasePage {
             workflowactiondialog
                 .get('input[name="jcr:title"]')
                 .invoke('val')
-                .should('contain', 'en - Default started by editor')
+                .should('contain', 'en - Scheduled publication workflow started by editor')
         }
         workflowactiondialog
             .get('.x-panel-bbar')

@@ -33,7 +33,7 @@ describe('Editor Test', () => {
             `${Cypress.env('MAILHOG_URL')}/api/v2/search`,
             'jahia.editor@test.com',
             'Validation request by Editor Test prior to publication on Digitall',
-            dayjs().add(1, 'day').format('MMM DD, YYYY'),
+            dayjs().add(1, 'day').format('MMM D, YYYY'),
         )
     })
 })
