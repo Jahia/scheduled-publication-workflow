@@ -69,7 +69,9 @@ class WorkflowPage extends BasePage {
     private validateScheduleButtons() {
         this.getByText('button', 'Publish now').should(this.BE_VISIBLE)
         this.getByText('button', 'Abort publication').should(this.BE_VISIBLE)
-        this.getByText('button', 'Schedule publication').should(this.BE_VISIBLE)
+        cy.get('#workflow-dashboard-publication-window')
+            .contains('button', 'Schedule publication')
+            .should(this.BE_VISIBLE)
     }
 
     private validateRescheduleButtons() {
