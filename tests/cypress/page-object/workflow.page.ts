@@ -21,7 +21,7 @@ class WorkflowPage extends BasePage {
         this.getByText('label', 'en - Scheduled publication workflow started by editor').should(this.BE_VISIBLE)
 
         cy.get('.x-tree3-node-joint').click()
-        this.getByText('button', 'Review').should(this.BE_VISIBLE).click()
+        this.getByText('button', 'Publication review').should(this.BE_VISIBLE).click()
         this.getByText('button', 'Reject').should(this.BE_VISIBLE)
         this.getByText('button', 'Validate').should(this.BE_VISIBLE)
         this.getByText('button', 'Publish now').should(this.BE_VISIBLE)
