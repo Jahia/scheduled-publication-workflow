@@ -35,7 +35,7 @@ class WorkflowPage extends BasePage {
         this.goTo({ username: WorkflowPage.CHIEF_USERNAME, password: WorkflowPage.CHIEF_PASSWORD })
         this.getByText('label', 'en - Scheduled publication workflow started by editor').should(this.BE_VISIBLE)
         cy.get('.x-tree3-node-joint').click()
-        const actionButtonLabel = scheduled ? 'Reschedule' : 'Schedule'
+        const actionButtonLabel = scheduled ? 'Reschedule' : 'Schedule publication'
         this.getByText('button', actionButtonLabel).should(this.BE_VISIBLE).click()
         if (scheduled) {
             this.validateRescheduleButtons()
@@ -62,7 +62,7 @@ class WorkflowPage extends BasePage {
         this.goTo({ username: WorkflowPage.CHIEF_USERNAME, password: WorkflowPage.CHIEF_PASSWORD })
         this.getByText('label', 'en - Scheduled publication workflow started by editor').should(this.BE_VISIBLE)
         cy.get('.x-tree3-node-joint').click()
-        this.getByText('button', 'Schedule').should(this.BE_VISIBLE).click()
+        this.getByText('button', 'Schedule publication').should(this.BE_VISIBLE).click()
         this.getByText('button', 'Publish now').should(this.BE_VISIBLE).click()
     }
 
