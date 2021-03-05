@@ -18,13 +18,13 @@ class WorkflowPage extends BasePage {
     openWorkflowAsReviewerAndVerifyButtons() {
         this.login(WorkflowPage.REVIEWER_USERNAME, WorkflowPage.REVIEWER_PASSWORD, WorkflowPage.SITE)
         this.goTo({ username: WorkflowPage.REVIEWER_PASSWORD, password: WorkflowPage.REVIEWER_PASSWORD })
-        this.getByText('label', 'en - Default started by editor').should(this.BE_VISIBLE)
+        this.getByText('label', 'en - Scheduled publication workflow started by editor').should(this.BE_VISIBLE)
 
         cy.get('.x-tree3-node-joint').click()
-        this.getByText('button', 'Review').should(this.BE_VISIBLE).click()
+        this.getByText('button', 'Publication review').should(this.BE_VISIBLE).click()
         this.getByText('button', 'Reject').should(this.BE_VISIBLE)
-        this.getByText('button', 'Accept').should(this.BE_VISIBLE)
-        this.getByText('button', 'Publish Now').should(this.BE_VISIBLE)
+        this.getByText('button', 'Validate').should(this.BE_VISIBLE)
+        this.getByText('button', 'Publish now').should(this.BE_VISIBLE)
         this.getByText('button', 'Cancel').should(this.BE_VISIBLE)
         cy.get(WorkflowPage.SCHEDULED_DATE_INPUT).should(this.BE_VISIBLE)
         cy.get(WorkflowPage.SCHEDULED_DATE_INPUT).should('have.attr', 'readonly')
@@ -33,9 +33,9 @@ class WorkflowPage extends BasePage {
     openWorkflowAsEditorInChiefAndVerifyButtons(scheduled: boolean, abort: boolean) {
         this.login(WorkflowPage.CHIEF_USERNAME, WorkflowPage.CHIEF_PASSWORD, WorkflowPage.SITE)
         this.goTo({ username: WorkflowPage.CHIEF_USERNAME, password: WorkflowPage.CHIEF_PASSWORD })
-        this.getByText('label', 'en - Default started by editor').should(this.BE_VISIBLE)
+        this.getByText('label', 'en - Scheduled publication workflow started by editor').should(this.BE_VISIBLE)
         cy.get('.x-tree3-node-joint').click()
-        const actionButtonLabel = scheduled ? 'Reschedule' : 'Schedule'
+        const actionButtonLabel = scheduled ? 'Reschedule' : 'Schedule publication'
         this.getByText('button', actionButtonLabel).should(this.BE_VISIBLE).click()
         if (scheduled) {
             this.validateRescheduleButtons()
@@ -48,7 +48,7 @@ class WorkflowPage extends BasePage {
             .type(dayjs().add(2, 'day').format('DD.MM.YYYY HH:mm'), { force: true })
 
         if (abort) {
-            this.getByText('button', 'Abort Publication').should(this.BE_VISIBLE).click()
+            this.getByText('button', 'Abort publication').should(this.BE_VISIBLE).click()
         } else {
             cy.get('#workflow-dashboard-publication-window')
                 .contains('button', actionButtonLabel)
@@ -60,20 +60,22 @@ class WorkflowPage extends BasePage {
     publishNowAsEditorInChief() {
         this.login(WorkflowPage.CHIEF_USERNAME, WorkflowPage.CHIEF_PASSWORD, WorkflowPage.SITE)
         this.goTo({ username: WorkflowPage.CHIEF_USERNAME, password: WorkflowPage.CHIEF_PASSWORD })
-        this.getByText('label', 'en - Default started by editor').should(this.BE_VISIBLE)
+        this.getByText('label', 'en - Scheduled publication workflow started by editor').should(this.BE_VISIBLE)
         cy.get('.x-tree3-node-joint').click()
-        this.getByText('button', 'Schedule').should(this.BE_VISIBLE).click()
-        this.getByText('button', 'Publish Now').should(this.BE_VISIBLE).click()
+        this.getByText('button', 'Schedule publication').should(this.BE_VISIBLE).click()
+        this.getByText('button', 'Publish now').should(this.BE_VISIBLE).click()
     }
 
     private validateScheduleButtons() {
-        this.getByText('button', 'Publish Now').should(this.BE_VISIBLE)
-        this.getByText('button', 'Abort Publication').should(this.BE_VISIBLE)
-        this.getByText('button', 'Schedule Publication').should(this.BE_VISIBLE)
+        this.getByText('button', 'Publish now').should(this.BE_VISIBLE)
+        this.getByText('button', 'Abort publication').should(this.BE_VISIBLE)
+        cy.get('#workflow-dashboard-publication-window')
+            .contains('button', 'Schedule publication')
+            .should(this.BE_VISIBLE)
     }
 
     private validateRescheduleButtons() {
-        this.getByText('button', 'Publish Now').should(this.BE_VISIBLE)
+        this.getByText('button', 'Publish now').should(this.BE_VISIBLE)
         this.getByText('button', 'Cancel').should(this.BE_VISIBLE)
     }
 
@@ -83,7 +85,7 @@ class WorkflowPage extends BasePage {
         this.logout()
         workflowPage.openWorkflowAsReviewerAndVerifyButtons()
         workflowPage.cleanUpEmails()
-        workflowPage.getByText('button', 'Accept').click()
+        workflowPage.getByText('button', 'Validate').click()
         workflowPage.logout()
         workflowPage.cleanUpEmails()
     }

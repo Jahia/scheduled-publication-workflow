@@ -14,7 +14,7 @@ describe('Reviewer test accept', () => {
     it('Logins as a reviewer, checks buttons and readonly date and accepts the publication', function () {
         workflowPage.openWorkflowAsReviewerAndVerifyButtons()
         workflowPage.cleanUpEmails()
-        workflowPage.getByText('button', 'Accept').click()
+        workflowPage.getByText('button', 'Validate').click()
     })
 
     it(
@@ -31,7 +31,7 @@ describe('Reviewer test accept', () => {
                     'Content validation by Ace Ventura for Digitall',
                 )
                 expect(resp.body.items[0].Content.Body).to.contain('The content is scheduled to be published on:')
-                expect(resp.body.items[0].Content.Body).to.contain(dayjs().add(1, 'day').format('MMM DD, YYYY'))
+                expect(resp.body.items[0].Content.Body).to.contain(dayjs().add(1, 'day').format('MMM D, YYYY'))
             })
         },
     )

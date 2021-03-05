@@ -11,7 +11,7 @@ This module is currently in the POC (Proof of Concept) state
 
 ## Requirements
 
-- Jahia DXP 8.0.0.0+
+- Jahia DXP 8.0.2.0+
 - workflow-extender module deployed on Jahia DXP server
 
 ## Open-Source

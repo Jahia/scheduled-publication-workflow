@@ -29,7 +29,7 @@ function checkForPublishedEmailRecursively() {
             expect(resp.status).to.eq(200)
             expect(resp.body.total).to.eq(1)
             expect(resp.body.items[0].Content.Headers.Subject[0]).to.eq('Content has been published on Digitall')
-            expect(resp.body.items[0].Content.Body).to.contain(publicationTime.format('MMM DD, YYYY'))
+            expect(resp.body.items[0].Content.Body).to.contain(publicationTime.format('MMM D, YYYY'))
             return
         }
         checkForPublishedEmailRecursively()
