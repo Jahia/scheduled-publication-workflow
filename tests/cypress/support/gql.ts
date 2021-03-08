@@ -27,6 +27,20 @@ export async function deleteNode(path: string): Promise<any> {
     return response.data
 }
 
+export async function checkVersion(): Promise<string> {
+    const response = await rootClient.query({
+        query: gql`
+            {
+                admin {
+                    version
+                }
+            }
+        `,
+        errorPolicy: 'ignore',
+    })
+    return response.data.admin.version
+}
+
 export async function getActiveUserWorkflow(userClient: ApolloClient<NormalizedCacheObject>): Promise<any> {
     const activeUserWorkflowQuery = require(`graphql-tag/loader!../fixtures/activeUserWorkflow.graphql`)
     const response = await userClient.query({

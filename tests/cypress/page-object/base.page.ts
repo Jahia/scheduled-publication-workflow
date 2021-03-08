@@ -15,10 +15,6 @@ export class BasePage {
         return cy.contains(type, text)
     }
 
-    assertElementVisibleBySelector(selector: string): Cypress.Chainable {
-        return cy.get(selector).should(this.BE_VISIBLE)
-    }
-
     getIframeBody(): Cypress.Chainable {
         // get the iframe > document > body
         // and retry until the body element is not empty
@@ -43,7 +39,7 @@ export class BasePage {
         await clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main`)
         await deleteNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
         const client = getRootClient()
-        const newNodeMutation = await client.mutate({
+        await client.mutate({
             mutation: addRichTextToPage,
             variables: {
                 name: contentName,
@@ -53,10 +49,6 @@ export class BasePage {
             errorPolicy: 'all',
             fetchPolicy: 'no-cache',
         })
-        expect(newNodeMutation.errors).to.be.undefined
-        console.log(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
-        const newContentNode = await getNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
-        expect(newContentNode.jcr.nodeByPath.uuid).not.to.be.undefined
     }
 
     validateEmailReceivedWithCorrectSubject(
