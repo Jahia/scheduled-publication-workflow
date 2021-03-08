@@ -15,10 +15,6 @@ export class BasePage {
         return cy.contains(type, text)
     }
 
-    assertElementVisibleBySelector(selector: string): Cypress.Chainable {
-        return cy.get(selector).should(this.BE_VISIBLE)
-    }
-
     getIframeBody(): Cypress.Chainable {
         // get the iframe > document > body
         // and retry until the body element is not empty

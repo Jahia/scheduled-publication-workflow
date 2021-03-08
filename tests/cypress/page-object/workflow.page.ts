@@ -81,7 +81,7 @@ class WorkflowPage extends BasePage {
 
     async requestPublicationAndValidateContent(date?: string) {
         await home.prepareContentForTest('/sites/digitall', 'test-content-one', 'Nice test content')
-        home.requestPublicationOfContentAsEditor(date)
+        await home.requestPublicationOfContentAsEditor(date)
         this.logout()
         workflowPage.openWorkflowAsReviewerAndVerifyButtons()
         workflowPage.cleanUpEmails()
