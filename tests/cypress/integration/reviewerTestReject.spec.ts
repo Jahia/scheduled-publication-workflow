@@ -7,7 +7,7 @@ const date = dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm')
 describe('Reviewer test reject', () => {
     before(async function () {
         await home.prepareContentForTest('/sites/digitall', 'test-content-one', 'Nice test content')
-        home.requestPublicationOfContentAsEditor(date)
+        await home.requestPublicationOfContentAsEditor(date)
         home.logout()
     })
 

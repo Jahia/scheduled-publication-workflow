@@ -1,11 +1,16 @@
 import { home } from '../page-object/home.page'
 import * as dayjs from 'dayjs'
+import { checkVersion } from '../support/gql'
 
 const EDITOR_NAME_AND_PASSWORD = 'editor'
 const SITE = 'digitall'
+let startPublicationLabel
 describe('Editor Test', () => {
     before(async function () {
         await home.prepareContentForTest('/sites/digitall', 'test-content-one', 'Nice test content')
+        const jahiaVersion = await checkVersion()
+        startPublicationLabel =
+            jahiaVersion.indexOf('8.0.2.0') === -1 ? 'Start the publication flow' : 'Request publication'
     })
 
     after(function () {
@@ -22,7 +27,7 @@ describe('Editor Test', () => {
         workflowactiondialog.get('input[name="scheduledDate"]').type(dayjs().add(1, 'day').format('DD.MM.YYYY HH:mm'))
         workflowactiondialog
             .get('.x-panel-bbar')
-            .contains('Start the publication flow', { matchCase: false })
+            .contains(startPublicationLabel, { matchCase: false })
             .should('be.visible')
             .click()
         home.goTo({ username: EDITOR_NAME_AND_PASSWORD, password: EDITOR_NAME_AND_PASSWORD })
