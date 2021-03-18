@@ -1,6 +1,5 @@
 import { home } from '../page-object/home.page'
 import * as dayjs from 'dayjs'
-import { checkVersion } from '../support/gql'
 
 const EDITOR_NAME_AND_PASSWORD = 'editor'
 const SITE = 'digitall'
@@ -8,9 +7,7 @@ let startPublicationLabel
 describe('Editor Test', () => {
     before(async function () {
         await home.prepareContentForTest('/sites/digitall', 'test-content-one', 'Nice test content')
-        const jahiaVersion = await checkVersion()
-        startPublicationLabel =
-            jahiaVersion.indexOf('8.0.2.0') === -1 ? 'Start the publication flow' : 'Request publication'
+        startPublicationLabel = 'Request publication'
     })
 
     after(function () {
