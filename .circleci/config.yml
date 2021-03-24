@@ -493,7 +493,7 @@ jobs:
             - v1-maven-dependencies-
       - add_ssh_keys:
           fingerprints:
-            - "29:01:4c:71:59:29:c4:65:45:1d:95:1b:59:31:fd:b4"
+            - "59:75:4c:b6:b5:1e:fb:6a:92:43:5e:f3:c7:e9:ae:47"
       - run:
           name: Delete github tag <<pipeline.parameters.RELEASE_VERSION>>
           command: |
@@ -557,7 +557,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "29:01:4c:71:59:29:c4:65:45:1d:95:1b:59:31:fd:b4"
+            - "59:75:4c:b6:b5:1e:fb:6a:92:43:5e:f3:c7:e9:ae:47"
       - run:
           name: Setting up github configuration
           command: |
