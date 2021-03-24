@@ -69,6 +69,7 @@
 
     <properties>
         <jahia-module-type>system</jahia-module-type>
+        <jahia.nexus.staging.repository.id>64277f72646358</jahia.nexus.staging.repository.id>
         <jahia-module-signature>MC0CFFtEYNLmqC99c3/CX0Og/OJpOCzPAhUAhc5LsGaIDdppn/IHcHHt4E5gHZk=</jahia-module-signature>
     </properties>
 
