@@ -523,17 +523,10 @@ jobs:
       - run:
           name: Update github release for id << pipeline.parameters.RELEASE_ID >>
           command: |
-            yarn
-            GH_TOKEN=${GITHUB_API_TOKEN} yarn auto changelog
             curl -X PATCH \
             -H "Accept:application/vnd.github.v3+json" \
             -d "{\"tag_name\":\"<<pipeline.parameters.RELEASE_VERSION>>\", \"prerelease\": false, \"draft\": false}" -u \
             jahia-ci:$GITHUB_API_TOKEN https://api.github.com/repos/<<pipeline.parameters.GITHUB_SLUG>>/releases/<< pipeline.parameters.RELEASE_ID >>
-            curl \
-            -H "Content-Type: $(file -b --mime-type CHANGELOG.md)" \
-            -u jahia-ci:$GITHUB_API_TOKEN  \
-            --data-binary @CHANGELOG.md \
-            "https://uploads.github.com/repos/<<pipeline.parameters.GITHUB_SLUG>>/releases/<< pipeline.parameters.RELEASE_ID >>/assets?name=$(basename CHANGELOG.md)"
       - run:
           name: Perform release
           command: |
