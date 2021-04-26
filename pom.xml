@@ -5,9 +5,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,7 +37,7 @@
     <properties>
         <jahia-module-type>system</jahia-module-type>
         <jahia.nexus.staging.repository.id>64277f72646358</jahia.nexus.staging.repository.id>
-        <jahia-module-signature>MC0CFFtEYNLmqC99c3/CX0Og/OJpOCzPAhUAhc5LsGaIDdppn/IHcHHt4E5gHZk=</jahia-module-signature>
+        <jahia-module-signature>MCwCFEOM3FhRhncJZkLJK2mSu6TIlJOWAhRLmhARU884S3wjcXsC/TRUKLlaMQ==</jahia-module-signature>
     </properties>
 
     <repositories>
