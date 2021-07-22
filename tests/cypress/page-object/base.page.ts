@@ -30,7 +30,7 @@ export class BasePage {
         )
     }
 
-    async prepareContentForTest(sitePath: string, contentName: string, contextText: string): Promise<void> {
+    prepareContentForTest(sitePath: string, contentName: string, contextText: string) {
         this.cleanUpEmails()
         const addRichTextToPage = require(`graphql-tag/loader!../fixtures/addRichTextToPage.graphql`)
         abortWorkflows()

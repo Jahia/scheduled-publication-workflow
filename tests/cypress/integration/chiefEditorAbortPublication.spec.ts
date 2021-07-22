@@ -2,7 +2,7 @@ import { workflowPage } from '../page-object/workflow.page'
 
 describe('Editor in chief abort publication test', () => {
     before(async function () {
-        await workflowPage.requestPublicationAndValidateContent()
+        workflowPage.requestPublicationAndValidateContent()
     })
 
     it('Logins as a editor in chief, goes to the workflow dashboard and aborts the publication', function () {
