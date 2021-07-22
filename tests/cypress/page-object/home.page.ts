@@ -1,5 +1,10 @@
 import { BasePage } from './base.page'
 
+interface authMethod {
+    username: string
+    password: string
+}
+
 class HomePage extends BasePage {
     public static readonly EDITOR_NAME_AND_PASSWORD = 'editor'
 

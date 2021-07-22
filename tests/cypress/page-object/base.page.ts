@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { abortWorkflows, clearAllLocks, deleteNode, getNode, getRootClient } from '../support/gql'
+import { abortWorkflows, clearAllLocks, deleteNode, getNode, getRootClient, addRichTextToPage } from '../support/gql'
 
 export class BasePage {
     protected BE_VISIBLE = 'be.visible'
@@ -33,25 +33,19 @@ export class BasePage {
     async prepareContentForTest(sitePath: string, contentName: string, contextText: string): Promise<void> {
         this.cleanUpEmails()
         const addRichTextToPage = require(`graphql-tag/loader!../fixtures/addRichTextToPage.graphql`)
-        await abortWorkflows()
-        await clearAllLocks(`${sitePath}/home`)
-        await clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
-        await clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main`)
-        await deleteNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
-        const client = getRootClient()
-        const newNodeMutation = await client.mutate({
-            mutation: addRichTextToPage,
-            variables: {
-                name: contentName,
-                path: `${sitePath}/home/area-main/area/area/area/area-main`,
-                text: contextText,
-            },
-            errorPolicy: 'all',
-            fetchPolicy: 'no-cache',
-        })
+        abortWorkflows()
+        clearAllLocks(`${sitePath}/home`)
+        clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
+        clearAllLocks(`${sitePath}/home/area-main/area/area/area/area-main`)
+        deleteNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
+        const newNodeMutation: any = addRichTextToPage(
+            contentName,
+            `${sitePath}/home/area-main/area/area/area/area-main`,
+            contextText,
+        )
         expect(newNodeMutation.errors).to.be.undefined
         console.log(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
-        const newContentNode = await getNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
+        const newContentNode: any = getNode(`${sitePath}/home/area-main/area/area/area/area-main/${contentName}`)
         expect(newContentNode.jcr.nodeByPath.uuid).not.to.be.undefined
     }
 

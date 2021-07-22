@@ -2,6 +2,11 @@ import { BasePage } from './base.page'
 import * as dayjs from 'dayjs'
 import { home } from './home.page'
 
+interface authMethod {
+    username: string
+    password: string
+}
+
 class WorkflowPage extends BasePage {
     public static readonly SITE = 'digitall'
     public static readonly REVIEWER_USERNAME = 'ace'

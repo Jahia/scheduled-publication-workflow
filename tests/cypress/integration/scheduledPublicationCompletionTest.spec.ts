@@ -1,7 +1,7 @@
 import { workflowPage } from '../page-object/workflow.page'
 import * as dayjs from 'dayjs'
 import { getRootClient } from '../support/gql'
-import { ApolloClient, NormalizedCacheObject } from 'apollo-client-preset'
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const checkContentPublished = require(`graphql-tag/loader!../fixtures/checkIfContentIsPublished.graphql`)
 let publicationTime
