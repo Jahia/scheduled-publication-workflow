@@ -1,0 +1,9 @@
+instrumented/
+.nyc_output
+cypress/videos
+coverage
+node_modules
+cypress.env.json
+.env
+artifacts
+build-dependencies

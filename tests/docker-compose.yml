@@ -1,47 +1,42 @@
-version: '3.3'
+version: '3.6'
 services:
-  jahia:
-    image: "${JAHIA_IMAGE}"
-    container_name: jahia
-    depends_on:
-      - mailhog
-    volumes:
-      - /tmp/license.xml:/opt/jahia/dx/digital-factory-config/jahia/license.xml:ro
-    ports:
-      - "${JAHIA_PORT}:8080"
-    extra_hosts:
-      - jahia:127.0.0.1
-    networks:
-      - stack
-  # Cypress container
-  cypress:
-    image: "${TESTS_IMAGE}"
-    container_name: e2e-tests
-    ipc: host
-    depends_on:
-      - jahia
-      - mailhog
-    environment:
-      - MANIFEST=${MANIFEST}
-      - JAHIA_USERNAME=${JAHIA_USERNAME}
-      - JAHIA_PASSWORD=${JAHIA_PASSWORD}
-      - JAHIA_URL=${JAHIA_URL}
-      - JAHIA_HOST=${JAHIA_HOST}
-      - JAHIA_PORT=${JAHIA_PORT}
-      - NEXUS_USERNAME=${NEXUS_USERNAME}
-      - NEXUS_PASSWORD=${NEXUS_PASSWORD}
-    volumes:
-      - type: bind
-        source: ./results
-        target: /tmp/results
-    networks:
-      - stack
-  mailhog:
-      image: mailhog/mailhog
-      container_name: mailhog.test
-      ports:
-        - 8025:8025
-      networks:
-        - stack
+    jahia:
+        image: '${JAHIA_IMAGE}'
+        container_name: jahia
+        depends_on:
+            - mailhog        
+        environment:
+            - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}        
+            - MAX_RAM_PERCENTAGE=95
+            - JAHIA_LICENSE=${JAHIA_LICENSE}
+        ports:
+            - '8080:8080'
+        extra_hosts:
+            - jahia:127.0.0.1
+        networks:
+            - stack   
+    # Cypress container
+    cypress:
+        image: '${TESTS_IMAGE}'
+        # https://github.com/cypress-io/cypress/issues/350
+        ipc: host
+        container_name: cypress
+        depends_on:
+            - jahia
+        environment:
+            - MANIFEST=${MANIFEST}
+            - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
+            - JAHIA_URL=http://jahia:8080
+            - NEXUS_USERNAME=${NEXUS_USERNAME}
+            - NEXUS_PASSWORD=${NEXUS_PASSWORD}
+        networks:
+            - stack
+    mailhog:
+        image: mailhog/mailhog
+        container_name: mailhog.test
+        ports:
+            - 8025:8025
+        networks:
+            - stack            
 networks:
-  stack:
+    stack:

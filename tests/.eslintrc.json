@@ -11,8 +11,7 @@
         "plugin:prettier/recommended"
     ],
     "rules": {
-        "cypress/no-async-tests": "off",
-        "no-var-requires": 0
-    },
+        "cypress/no-async-tests": "off"
+    },    
     "root": true
 }
