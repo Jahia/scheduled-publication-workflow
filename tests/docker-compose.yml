@@ -3,10 +3,12 @@ services:
   jahia:
     image: "${JAHIA_IMAGE}"
     container_name: jahia
+    environment:
+        jahia_cfg_karaf_remoteShellHost: 0.0.0.0
+        JAHIA_LICENSE: ${JAHIA_LICENSE}
+        SUPER_USER_PASSWORD: root    
     depends_on:
       - mailhog
-    volumes:
-      - /tmp/license.xml:/opt/jahia/dx/digital-factory-config/jahia/license.xml:ro
     ports:
       - "${JAHIA_PORT}:8080"
     extra_hosts:
