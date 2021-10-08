@@ -18,6 +18,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ import java.util.List;
 
 @Component(immediate=true)
 public class AssignToAuthorWithPermissionValve extends BaseAuthValve {
-
+    private static final Logger logger = LoggerFactory.getLogger(AssignToAuthorWithPermissionValve.class);
     public static final List<String> TASK_NAMES = Arrays.asList("schedule", "reschedule");
     public static final String PERMISSION = "author-publication-if-validated";
 
@@ -89,7 +91,7 @@ public class AssignToAuthorWithPermissionValve extends BaseAuthValve {
                     task.getPeopleAssignments().getPotentialOwners().add(new UserImpl(user));
                 }
             } catch (RepositoryException e) {
-                e.printStackTrace();
+                logger.warn("Error assigning potential task owners", e);
             }
         }
         valveContext.invokeNext(context);
