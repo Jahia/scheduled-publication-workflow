@@ -11,7 +11,7 @@ orbs:
 parameters:
   AUDITCI_LEVEL:
     type: string
-    default: "moderate"
+    default: "critical"
   TESTS_PATH:
     type: string
     default: "tests/"
@@ -652,7 +652,7 @@ workflows:
             - build
           context: QA_ENVIRONMENT
           #Using Aliases here (8 is the latest of the 8 tree, 8.1 is the latest of the tree, ...)
-          JAHIA_IMAGE: jahia/jahia-private:snapshot-dev
+          JAHIA_IMAGE: jahia/jahia-ee-dev:8-SNAPSHOT
           RUN_TESTSIMAGE: << pipeline.parameters.TESTS_IMAGE >>:latest
           TOOLS_USER: root
           TOOLS_PWD: root
@@ -732,8 +732,7 @@ workflows:
       - integration_tests:
           matrix:
             parameters:
-              JAHIA_IMAGE:
-                ["jahia/jahia-private:snapshot-dev", "jahia/jahia-dev:8.0"]
+              JAHIA_IMAGE: ["jahia/jahia-ee:8", "jahia/jahia-ee-dev:8-SNAPSHOT"]
               RUN_TESTSIMAGE: ["<< pipeline.parameters.TESTS_IMAGE >>:latest"]
               MANIFEST: ["warmup-manifest-snapshot.yml"]
               TESTRAIL_MILESTONE: ["<< matrix.JAHIA_IMAGE >>"]
