@@ -13,7 +13,7 @@ export function getRootClient(): ApolloClient<NormalizedCacheObject> {
 export async function deleteNode(path: string): Promise<any> {
     const response = await rootClient.mutate({
         mutation: gql`
-            mutation($path: String!) {
+            mutation ($path: String!) {
                 jcr(workspace: EDIT) {
                     deleteNode(pathOrId: $path)
                 }
@@ -55,7 +55,7 @@ export async function abortWorkflows(): Promise<any> {
 export async function clearAllLocks(path: string): Promise<any> {
     const response = await rootClient.mutate({
         mutation: gql`
-            mutation($path: String!) {
+            mutation ($path: String!) {
                 jcr(workspace: EDIT) {
                     mutateNode(pathOrId: $path) {
                         clearAllLocks
@@ -74,7 +74,7 @@ export async function clearAllLocks(path: string): Promise<any> {
 export async function getNode(path: string): Promise<any> {
     const response = await rootClient.query({
         query: gql`
-            query($path: String!) {
+            query ($path: String!) {
                 jcr(workspace: EDIT) {
                     nodeByPath(path: $path) {
                         uuid
