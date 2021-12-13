@@ -235,7 +235,7 @@ workflows:
               only:
                 - << pipeline.parameters.PRIMARY_RELEASE_BRANCH >>
     jobs:
-      - jahia-modules-orb/initialize
+#       - jahia-modules-orb/initialize
 #      - jahia-modules-orb/integration-tests:
 #          name: Nightly-<< matrix.jahia_image >>
 #          context: QA_ENVIRONMENT
