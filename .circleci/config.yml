@@ -105,15 +105,15 @@ workflows:
             - jahia-modules-orb/build
           primary_release_branch: << pipeline.parameters.PRIMARY_RELEASE_BRANCH >>
           github_slug: << pipeline.parameters.GITHUB_SLUG >>
-      #      - jahia-modules-orb/integration-tests:
-      #          context: QA_ENVIRONMENT
-      #          requires:
-      #            - jahia-modules-orb/build
-      #          jahia_image: << pipeline.parameters.JAHIA_IMAGE >>
-      #          tests_manifest: provisioning-manifest-build.yml
-      #          module_id: << pipeline.parameters.MODULE_ID >>
-      #          testrail_project: << pipeline.parameters.TESTRAIL_PROJECTNAME >>
-      #          testrail_milestone: << pipeline.parameters.TESTRAIL_MILESTONE >>
+            - jahia-modules-orb/integration-tests:
+                context: QA_ENVIRONMENT
+                requires:
+                  - jahia-modules-orb/build
+                jahia_image: << pipeline.parameters.JAHIA_IMAGE >>
+                tests_manifest: provisioning-manifest-build.yml
+                module_id: << pipeline.parameters.MODULE_ID >>
+                testrail_project: << pipeline.parameters.TESTRAIL_PROJECTNAME >>
+                testrail_milestone: << pipeline.parameters.TESTRAIL_MILESTONE >>
       - jahia-modules-orb/publish:
           context: QA_ENVIRONMENT
           requires:
@@ -226,29 +226,29 @@ workflows:
   # The objective of nightly runs is to ensure the codebase still passes tests:
   # - With the latest releases version of Jahia
   # - With the current snapshot of Jahia
-#   nightly:
-#     triggers:
-#       - schedule:
-#           cron: "0 0 * * *"
-#           filters:
-#             branches:
-#               only:
-#                 - << pipeline.parameters.PRIMARY_RELEASE_BRANCH >>
-#     jobs:
-#      - jahia-modules-orb/initialize
-#      - jahia-modules-orb/integration-tests:
-#          name: Nightly-<< matrix.jahia_image >>
-#          context: QA_ENVIRONMENT
-#          requires:
-#            - jahia-modules-orb/initialize
-#          matrix:
-#            parameters:
-#              jahia_image: ["jahia/jahia-ee:8", "jahia/jahia-ee-dev:8-SNAPSHOT"]
-#              tests_manifest: ["provisioning-manifest-snapshot.yml"]
-#              module_id: ["<< pipeline.parameters.MODULE_ID >>"]
-#              testrail_project: ["<< pipeline.parameters.TESTRAIL_PROJECTNAME >>"]
-#              testrail_milestone: ["<< matrix.jahia_image >>"]
-#              should_skip_artifacts: [true]
-#              should_skip_testrail: [false]
-#              should_skip_notifications: [false]
-#              should_skip_zencrepes: [false]
+   nightly:
+     triggers:
+       - schedule:
+           cron: "0 0 * * *"
+           filters:
+             branches:
+               only:
+                 - << pipeline.parameters.PRIMARY_RELEASE_BRANCH >>
+     jobs:
+      - jahia-modules-orb/initialize
+      - jahia-modules-orb/integration-tests:
+          name: Nightly-<< matrix.jahia_image >>
+          context: QA_ENVIRONMENT
+          requires:
+            - jahia-modules-orb/initialize
+          matrix:
+            parameters:
+              jahia_image: ["jahia/jahia-ee:8", "jahia/jahia-ee-dev:8-SNAPSHOT"]
+              tests_manifest: ["provisioning-manifest-snapshot.yml"]
+              module_id: ["<< pipeline.parameters.MODULE_ID >>"]
+              testrail_project: ["<< pipeline.parameters.TESTRAIL_PROJECTNAME >>"]
+              testrail_milestone: ["<< matrix.jahia_image >>"]
+              should_skip_artifacts: [true]
+              should_skip_testrail: [false]
+              should_skip_notifications: [false]
+              should_skip_zencrepes: [false]
