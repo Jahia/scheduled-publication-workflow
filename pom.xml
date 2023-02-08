@@ -35,6 +35,7 @@
     </scm>
 
     <properties>
+        <jahia-depends>workflow-extender</jahia-depends>
         <jahia-module-type>system</jahia-module-type>
         <jahia.nexus.staging.repository.id>64277f72646358</jahia.nexus.staging.repository.id>
         <jahia-module-signature>MCwCFEOM3FhRhncJZkLJK2mSu6TIlJOWAhRLmhARU884S3wjcXsC/TRUKLlaMQ==</jahia-module-signature>
@@ -63,7 +64,6 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Jahia-Depends>default,workflow-extender</Jahia-Depends>
                         <_dsannotations>*</_dsannotations>
                     </instructions>
                 </configuration>
