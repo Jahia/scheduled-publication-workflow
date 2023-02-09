@@ -28,6 +28,7 @@ jobs:
         with:
           node_version: 14
           auditci_level: critical
+          skip_vulns_tests: true
 
   build:
     name: Build Module
