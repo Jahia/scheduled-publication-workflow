@@ -1,9 +1,0 @@
-mutation ($name: String!, $path: String!, $text: String!){
-    jcr(workspace: EDIT) {
-        addNode(parentPathOrId: $path, name: $name, primaryNodeType: "jnt:bigText") {
-            mutateProperty(name: "text") {
-                setValue(language: "en", value: $text)
-            }
-        }
-    }
-}
