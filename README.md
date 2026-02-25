@@ -6,7 +6,7 @@
 A Jahia module that adds a workflow definition that can handle scheduled and validated publication workflow.
 
 > [!WARNING]  
-> Custom workflows are now deprecated, and this module should not be used anymore.
+> As of Jahia 8.2.4.0, custom workflows are deprecated, and you should not base your module implementation on this sample.
 
 ## Status
 
