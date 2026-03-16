@@ -3,7 +3,10 @@
 </a>
 
 # Scheduled Publication Workflow
-A Jahia module that adds a workflow definition that can handle scheduled and validated publication workflow
+A Jahia module that adds a workflow definition that can handle scheduled and validated publication workflow.
+
+> [!WARNING]  
+> Custom workflows using JBPM are now deprecated, Jahia plans to provide an alternative by the end of 2026. This module should not be used anymore.
 
 ## Status
 
@@ -12,7 +15,7 @@ This module is currently in the POC (Proof of Concept) state
 ## Requirements
 
 - Jahia DXP 8.0.2.0+
-- workflow-extender module deployed on Jahia DXP server
+- [workflow-extender](https://github.com/Jahia/workflow-extender/) module deployed on Jahia DXP server
 
 ## Open-Source
 
